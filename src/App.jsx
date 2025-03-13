@@ -1,8 +1,6 @@
-import React from 'react';
-import { Router } from './router/router';
+import React from "react";
+import { Router } from "./router/router";
 
-
-import './App.css'
-export const App = () => {  
+export const App = () => {
   return <Router />;
 };
