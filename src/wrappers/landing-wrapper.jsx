@@ -1,10 +1,10 @@
 import { Header } from "../components";
 
-export const LandingWrapper = ({ children, headerBorderBottom }) => {
+export const LandingWrapper = ({ children }) => {
   return (
-    <div className="relative">
-      <Header withBorderBottom={headerBorderBottom} />
-      {children}
+    <div style={{ paddingTop: "5rem" }}>
+      <Header />
+      <div>{children}</div>
     </div>
   );
 };
