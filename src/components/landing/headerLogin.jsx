@@ -1,9 +1,7 @@
 import React from "react";
-import { Button } from "primereact/button";
-import { Divider } from "primereact/divider";
 import { useLocation } from "wouter";
 
-export const Header = () => {
+export const HeaderLogin = () => {
   const [l, setLocation] = useLocation();
   return (
     <div
@@ -16,14 +14,6 @@ export const Header = () => {
         </h1>
       </div>
 
-      <div className="flex justify-end gap-1 items-center">
-        <Divider layout="vertical" />
-        <Button
-          label="Entrar"
-          className="p-button-text text-white border-none p-2 rounded-md"
-          onClick={() => setLocation("/login")}
-        />
-      </div>
     </div>
   );
 };
