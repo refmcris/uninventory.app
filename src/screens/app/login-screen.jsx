@@ -16,7 +16,7 @@ export const LoginScreen = () => {
   return (
     <LandingWrapperLogin className="bg-gray-100">
         <section className="w-11 py-8 md:py-8 relative overflow-hidden mt-5rem">
-            <div className="grid grid-nogutter max-w-screen-lg mx-auto px-4">
+            <div className="flex align-items-center justify-content-center min-h-screen w-full">
                 <Card className="w-11 md:w-30rem mx-auto">
                     <div className="flex justify-content-center mb-5">
                         <div className="w-10rem">
@@ -57,7 +57,7 @@ export const LoginScreen = () => {
                         <a href="#" className="custom-link text-sm">    
                             ¿Olvidó su nombre de usuario o contraseña?
                         </a>
-                        <a href="#" className="custom-link text-sm">
+                        <a href="./register" className="custom-link text-sm">
                             ¿No estás registrado aún? crea tu cuenta aquí
                         </a>
                     </div>

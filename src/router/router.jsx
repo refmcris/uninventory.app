@@ -1,5 +1,5 @@
 import { Route, Switch } from "wouter";
-import { HomeScreen, PrivateScreen, LoginScreen } from "../screens";
+import { HomeScreen, PrivateScreen, LoginScreen, RegisterScreen } from "../screens";
 
 export const Router = () => {
   return (
@@ -8,6 +8,7 @@ export const Router = () => {
         <Route path="/" component={HomeScreen} />
         <Route path="/private" component={PrivateScreen} />
         <Route path="/login" component={LoginScreen} />
+        <Route path="/register" component={RegisterScreen} />
       </Switch>
     </>
   );

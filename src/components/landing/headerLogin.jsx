@@ -1,8 +1,6 @@
 import React from "react";
-import { useLocation } from "wouter";
 
 export const HeaderLogin = () => {
-  const [l, setLocation] = useLocation();
   return (
     <div
       className="h-5rem flex items-center justify-content-between fixed top-0 left-0 w-full z-50 shadow-md"
