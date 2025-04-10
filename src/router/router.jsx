@@ -5,7 +5,9 @@ import {
   UserHomeScreen,
   Equipment,
   HistoricalLoans,
-  UserProfile
+  UserProfile,
+  LoginScreen,
+  RegisterScreen
 } from "../screens";
 
 export const Router = () => {
@@ -18,6 +20,8 @@ export const Router = () => {
         <Route path="/equipos" component={Equipment} />
         <Route path="/prestamos-realizados" component={HistoricalLoans} />
         <Route path="/perfil" component={UserProfile} />
+        <Route path="/login" component={LoginScreen} />
+        <Route path="/register" component={RegisterScreen} />
       </Switch>
     </>
   );
