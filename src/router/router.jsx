@@ -1,5 +1,12 @@
 import { Route, Switch } from "wouter";
-import { HomeScreen, PrivateScreen, LoginScreen, RegisterScreen } from "../screens";
+import {
+  HomeScreen,
+  PrivateScreen,
+  UserHomeScreen,
+  Equipment,
+  HistoricalLoans,
+  UserProfile
+} from "../screens";
 
 export const Router = () => {
   return (
@@ -7,8 +14,10 @@ export const Router = () => {
       <Switch>
         <Route path="/" component={HomeScreen} />
         <Route path="/private" component={PrivateScreen} />
-        <Route path="/login" component={LoginScreen} />
-        <Route path="/register" component={RegisterScreen} />
+        <Route path="/home" component={UserHomeScreen} />
+        <Route path="/equipos" component={Equipment} />
+        <Route path="/prestamos-realizados" component={HistoricalLoans} />
+        <Route path="/perfil" component={UserProfile} />
       </Switch>
     </>
   );
