@@ -6,7 +6,6 @@ import {
   Equipment,
   HistoricalLoans,
   UserProfile,
-  PrivateScreen,
   LoginScreen,
   RegisterScreen
 } from "../screens";
