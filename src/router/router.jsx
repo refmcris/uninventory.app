@@ -3,7 +3,9 @@ import {
   HomeScreen,
   PrivateScreen,
   UserHomeScreen,
-  Equipment
+  Equipment,
+  HistoricalLoans,
+  UserProfile
 } from "../screens";
 
 export const Router = () => {
@@ -13,7 +15,9 @@ export const Router = () => {
         <Route path="/" component={HomeScreen} />
         <Route path="/private" component={PrivateScreen} />
         <Route path="/home" component={UserHomeScreen} />
-        <Route path="/equipment" component={Equipment} />
+        <Route path="/equipos" component={Equipment} />
+        <Route path="/prestamos-realizados" component={HistoricalLoans} />
+        <Route path="/perfil" component={UserProfile} />
       </Switch>
     </>
   );

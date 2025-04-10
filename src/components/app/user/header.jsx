@@ -29,8 +29,8 @@ export const HeaderUser = () => {
   const handleNavigate = (to) => setLocation(to);
 
   const menuItems = [
-    { label: "Perfil", command: () => handleNavigate("/") },
-    { label: "Préstamos Realizados", command: () => handleNavigate("/") },
+    { label: "Perfil", command: () => handleNavigate("/perfil") , icon: "pi pi-user" },
+    { label: "Préstamos Realizados", command: () => handleNavigate("/prestamos-realizados"), icon: "pi pi-list" },
     { separator: true },
     {
       label: "Cerrar Sesión",
@@ -59,8 +59,8 @@ export const HeaderUser = () => {
         />
         <NavItem
           label="Equipos"
-          to="/equipment"
-          isActive={l === "/equipment"}
+          to="/equipos"
+          isActive={l === "/equipos"}
           onClick={handleNavigate}
         />
       </div>
@@ -70,8 +70,10 @@ export const HeaderUser = () => {
           onClick={(e) => menuRef.current.toggle(e)}
         >
           <Avatar
-            label={session?.fullname?.slice(0, 2)?.toUpperCase()}
+            //label={!session?.image ? session?.fullname?.slice(0, 2)?.toUpperCase() : undefined}
+            shape="circle"
             className="bg-primary text-white text-xl font-bold border-circle w-3rem h-3rem flex items-center justify-center mr-2"
+            image="https://res.cloudinary.com/ds6fxjeak/image/upload/v1735940456/GYw8am3WAAkYOj5_aoftgl.jpg"
           />
           <i className="pi pi-chevron-down text-white text-lg mt-3" />
         </div>
