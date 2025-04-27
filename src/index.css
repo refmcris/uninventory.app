@@ -1,7 +1,84 @@
-html,
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  --primary-color: #cd1f32;
+  --primary-color-text: #ffffff;
+  --primary-color-hover: #a51928;
+  --primary-color-background: #e3e7ea;
+  --primary-color-text-oscuro: #213547;
+  --primary-color-focus: rgba(205, 31, 50, 0.3);
+
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  
+}
+
+.p-button {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--primary-color-text);
+}
+.p-button:not(.p-disabled):hover {
+  background: var(--primary-color-hover);
+  border-color: var(--primary-color-hover);
+}
+.p-button:hover {
+  background: var(--primary-color-hover);
+  border-color: var(--primary-color-hover);
+}
+
+.p-inputtext:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(205, 31, 50);
+}
+.p-inputtext:enabled:hover {
+  border-color: var(--primary-color);
+}
+.p-inputtext:enabled:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem var(--primary-color-focus);
+}
+a:hover {
+  color: var(--primary-color-hover);
+  text-decoration: underline;
+}
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
 body {
   margin: 0;
-  padding: 0;
-  height: 100%;
-  
+  background-color: var(--primary-color-background);
+  color: var(--primary-color-text-oscuro);
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #cd1f32;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
 }

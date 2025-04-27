@@ -21,7 +21,7 @@ export const Header = () => {
         <Button
           label="Entrar"
           className="p-button-text text-white border-none p-2 rounded-md"
-          onClick={() => setLocation("/private")}
+          onClick={() => setLocation("/login")}
         />
       </div>
     </div>

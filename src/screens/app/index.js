@@ -4,3 +4,7 @@ export * from "./users-home-screen";
 export * from "./user-equipment";
 export * from "./dashboard-screen"
 export * from "./mostUsedEquipments-screen";
+export * from "./historical-loans-record";
+export * from "./user-profile-screen";
+export * from "./login-screen";
+export * from "./register-screen";

@@ -6,14 +6,21 @@ import { Card } from "primereact/card";
 import { Tag } from "primereact/tag";
 import { Button } from "primereact/button";
 import { GetCategories, GetEquipment } from "../../helpers/api";
+import { AddLoan } from "../../components";
 
 export const Equipment = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [sortField, setSortField] = useState("name");
   const [loaders, setLoaders] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
 
   const [equipments, setEquipments] = useState([]);
   const [categories, setCategories] = useState([]);
+
+
+
+  //hooks
 
   const handleLoaders = (value) => setLoaders((t) => ({ ...t, ...value }));
 
@@ -39,6 +46,12 @@ export const Equipment = () => {
       handleLoaders({ getCategories: false });
     }
   }
+
+  
+
+
+//bodys
+
 
  
   const sortOptions = [
@@ -78,7 +91,7 @@ export const Equipment = () => {
   const itemTemplate = (equipment) => {
     return (
       <div className="col-12 sm:col-6 lg:col-4 p-2">
-        <Card className="h-full flex flex-column">
+        <Card className="h-full flex flex-column" >
           <div className="flex flex-column flex-1">
             <div className="w-full h-20rem overflow-hidden">
               <img
@@ -114,6 +127,8 @@ export const Equipment = () => {
                 label="Solicitar Préstamo"
                 className="w-full"
                 disabled={equipment.status !== "available"}
+                style={{ backgroundColor: "#cd1f32" }}
+                onClick={() => setIsDialogOpen(true)}
               />
             </div>
           </div>
@@ -121,6 +136,8 @@ export const Equipment = () => {
       </div>
     );
   };
+
+
 
 
   useEffect(() => {
@@ -155,7 +172,13 @@ export const Equipment = () => {
             />
           </div>
         </div>
-
+              
+        <AddLoan 
+            visible={isDialogOpen}
+            onHide={() => setIsDialogOpen(false)}
+            loaders={loaders}
+        />
+        
         <DataView
           value={equipments}
           layout="grid"
@@ -163,6 +186,7 @@ export const Equipment = () => {
           paginator
           rows={9}
           className="mt-4"
+          emptyMessage="No hay equipos disponibles"
         />
         
       </div>

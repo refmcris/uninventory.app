@@ -16,3 +16,21 @@ export const GetCategories = () =>
 export const GetEquipment = (params) =>
   cliente.get("/equipment", { params }).then((t) => t.data);
 
+
+//loans
+
+export const GetLoans =(id) =>
+cliente.get(`loan/user/${id}`).then((t) => t.data);
+
+
+//users
+
+export const GetUsers = () =>
+  cliente.get("/user").then((t) => t.data);
+
+export const GetUserById = (id) =>
+  cliente.get(`/users/${id}`).then((t) => t.data);
+
+export const PutUser = (data) =>
+  cliente.put(`/users/${data?.userId}`, data).then((t) => t.data);
+

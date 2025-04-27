@@ -5,7 +5,11 @@ import {
   UserHomeScreen,
   Equipment,
   MostUsedEquipmentsScreen,
-  DashboardScreen
+  DashboardScreen,
+  HistoricalLoans,
+  UserProfile,
+  LoginScreen,
+  RegisterScreen
 } from "../screens";
 
 export const Router = () => {
@@ -18,6 +22,10 @@ export const Router = () => {
         <Route path="/equipment" component={Equipment} />
         <Route path="/dashboard" component={DashboardScreen} />
         <Route path="/mostUsedEquipments" component={MostUsedEquipmentsScreen} />
+        <Route path="/prestamos-realizados" component={HistoricalLoans} />
+        <Route path="/perfil" component={UserProfile} />
+        <Route path="/login" component={LoginScreen} />
+        <Route path="/register" component={RegisterScreen} />
       </Switch>
     </>
   );
