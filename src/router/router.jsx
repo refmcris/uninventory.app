@@ -9,7 +9,11 @@ import {
   HistoricalLoans,
   UserProfile,
   LoginScreen,
-  RegisterScreen
+  RegisterScreen,
+  ActiveInactiveEquipmentsScreen,
+  ActiveInactiveLoansScreen,
+  ActiveInactiveUsersScreen,
+  EquipmentManagementScreen,
 } from "../screens";
 
 export const Router = () => {
@@ -26,6 +30,10 @@ export const Router = () => {
         <Route path="/perfil" component={UserProfile} />
         <Route path="/login" component={LoginScreen} />
         <Route path="/register" component={RegisterScreen} />
+        <Route path="/activeInactiveEquipments" component={ActiveInactiveEquipmentsScreen} />
+        <Route path="/activeInactiveLoans" component={ActiveInactiveLoansScreen} />
+        <Route path="/activeInactiveUsers" component={ActiveInactiveUsersScreen} />
+        <Route path="/equipment-management" component={EquipmentManagementScreen} />
       </Switch>
     </>
   );

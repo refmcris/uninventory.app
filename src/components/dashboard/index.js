@@ -1,1 +1,1 @@
-export { DashboardSidebar } from "./dashboard-sidebar";
+export { DashboardPrimeReactSidebar } from "./dashboard-primereact-sidebar";

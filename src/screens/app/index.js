@@ -2,9 +2,13 @@ export * from "./home-screen";
 export * from "./private-screen";
 export * from "./users-home-screen";
 export * from "./user-equipment";
-export * from "./dashboard-screen"
+export * from "./dashboard-screen";
 export * from "./mostUsedEquipments-screen";
 export * from "./historical-loans-record";
 export * from "./user-profile-screen";
 export * from "./login-screen";
 export * from "./register-screen";
+export * from "./active-inactive-equipments-screen";
+export * from "./active-inactive-loans-screen";
+export * from "./active-inactive-users-screen";
+export * from "./equipment-management-screen";
