@@ -16,10 +16,9 @@
   --primary-color-text-oscuro: #213547;
   --primary-color-focus: rgba(205, 31, 50, 0.3);
 
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* Eliminado: display: flex; */
+  /* Eliminado: justify-content: center; */
+  /* Eliminado: align-items: center; */
   min-height: 100vh;
   margin: 0;
   

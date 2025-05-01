@@ -7,7 +7,6 @@ cliente.defaults.baseURL = import.meta.env.VITE_API_URL;
 cliente.defaults.headers["Content-Type"] = "application/json";
 console.log("cliente.defaults.baseURL",cliente.defaults.baseURL)
 
-
 //equipments and categories
 
 export const GetCategories = () =>
@@ -34,3 +33,7 @@ export const GetUserById = (id) =>
 export const PutUser = (data) =>
   cliente.put(`/users/${data?.userId}`, data).then((t) => t.data);
 
+//Chart Endpoints
+export const GetActiveInactiveEquipments = () => cliente.get("/activeInactiveEquipments").then(t => t.data);
+export const GetActiveInactiveLoans = () => cliente.get("/activeInactiveLoans").then(t => t.data);
+export const GetActiveInactiveUsers = () => cliente.get("/activeInactiveUsers").then(t => t.data);
