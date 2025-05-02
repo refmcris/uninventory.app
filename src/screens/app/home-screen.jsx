@@ -5,7 +5,7 @@ import { Button } from "primereact/button";
 export const HomeScreen = () => {
   return (
     <LandingWrapper>
-      <section className="w-11   py-8 md:py-8 relative overflow-hidden mt-5rem">
+      <section className="w-11p y-8 md:py-8 relative overflow-hidden">
         <div className="grid grid-nogutter max-w-screen-lg mx-auto px-4">
           <div className="col-12 md:col-6 flex flex-column justify-content-center text-left">
             <h1 className="text-900 font-bold text-4xl md:text-5xl mb-3">
