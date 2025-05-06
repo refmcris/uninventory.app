@@ -2,31 +2,66 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  --primary-color: #cd1f32;
+  --primary-color-text: #ffffff;
+  --primary-color-hover: #a51928;
+  --primary-color-background: #e3e7ea;
+  --primary-color-text-oscuro: #213547;
+  --primary-color-focus: rgba(205, 31, 50, 0.3);
+
+  /* Eliminado: display: flex; */
+  /* Eliminado: justify-content: center; */
+  /* Eliminado: align-items: center; */
+  min-height: 100vh;
+  margin: 0;
+  
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+.p-button {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--primary-color-text);
+}
+.p-button:not(.p-disabled):hover {
+  background: var(--primary-color-hover);
+  border-color: var(--primary-color-hover);
+}
+.p-button:hover {
+  background: var(--primary-color-hover);
+  border-color: var(--primary-color-hover);
+}
+
+.p-inputtext:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(205, 31, 50);
+}
+.p-inputtext:enabled:hover {
+  border-color: var(--primary-color);
+}
+.p-inputtext:enabled:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem var(--primary-color-focus);
 }
 a:hover {
-  color: #535bf2;
+  color: var(--primary-color-hover);
+  text-decoration: underline;
+}
+a {
+  text-decoration: none;
+  color: var(--primary-color);
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  background-color: var(--primary-color-background);
+  color: var(--primary-color-text-oscuro);
 }
 
 h1 {
@@ -34,6 +69,7 @@ h1 {
   line-height: 1.1;
 }
 
+<<<<<<< HEAD
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -58,13 +94,19 @@ button:focus-visible {
   font-style: normal;
 }
 
+=======
+>>>>>>> 00f6a5e1b4d743ee819e417d449f42c105903e91
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
   }
   a:hover {
+<<<<<<< HEAD
     color: #7c0000;
+=======
+    color: #cd1f32;
+>>>>>>> 00f6a5e1b4d743ee819e417d449f42c105903e91
   }
   button {
     background-color: #f9f9f9;

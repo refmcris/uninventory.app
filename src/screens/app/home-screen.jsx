@@ -31,7 +31,7 @@ export const HomeScreen = () => {
             </p>
 
             <Button
-              label="¡Reserva Ahora!"
+              label="¡Reserva ahora!"
               type="button"
               className="mr-3 p-button-raised p-button-lg"
               style={{ backgroundColor: "#cd1f32", border: "none" }}
@@ -50,6 +50,7 @@ export const HomeScreen = () => {
         </div>
       </div>
 
+      
       <div className="grid grid-nogutter text-center py-6 px-4 bg-gray-100">
         <div className="col-12 md:col-4 mb-4">
           <FaClock size={40} color="#cd1f32" />
@@ -68,6 +69,7 @@ export const HomeScreen = () => {
         </div>
       </div>
 
+      
       <div className="grid grid-nogutter text-center py-6 px-4">
         <div className="col-12 mb-6">
           <h2 style={{ fontFamily: "Bebas Neue", fontSize: "48px", color: "#cd1f32" }}>¿Por qué elegir Uninventory?</h2>
@@ -114,6 +116,7 @@ export const HomeScreen = () => {
         />
       </div>
 
+  
       <footer className="text-center p-4 text-600 bg-gray-200" style={{ fontFamily: "Poppins" }}>
         © {new Date().getFullYear()} Uninventory — Proyecto académico desarrollado en la Universidad del Valle.
       </footer>

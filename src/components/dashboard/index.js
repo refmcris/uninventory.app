@@ -1,0 +1,1 @@
+export { DashboardPrimeReactSidebar } from "./dashboard-primereact-sidebar";

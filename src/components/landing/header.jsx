@@ -24,20 +24,14 @@ export const Header = () => {
         
       </div>
 
-      <div className="flex justify-end items-center px-4 py-3">
-      <Button
-        label="Acceder"
-        className="bg-white text-gray-900 text-2x1 font-semibold px-4 py-1 border-round-md shadow-none hover:bg-gray-100 transition-all duration-200 mr-3 p-button-raised "
-        style={{
-          fontFamily: "Poppins, sans-serif",
-          border: "1px solid #FFFF",
-        }}
-        onClick={() => setLocation("/private")}
-      />
-    </div>
-
-    
-
+      <div className="flex justify-end gap-1 items-center">
+        <Divider layout="vertical" />
+        <Button
+          label="Entrar"
+          className="p-button-text text-white border-none p-2 rounded-md"
+          onClick={() => setLocation("/private")}
+        />
+      </div>
     </div>
   );
 };
