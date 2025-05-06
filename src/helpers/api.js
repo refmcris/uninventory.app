@@ -29,3 +29,10 @@ export const GetUserById = (id) =>
 
 export const PutUser = (data) =>
   cliente.put(`/users/${data?.userId}`, data).then((t) => t.data);
+
+export const GetActiveInactiveEquipments = () =>
+  cliente.get("/activeInactiveEquipments").then((t) => t.data);
+export const GetActiveInactiveLoans = () =>
+  cliente.get("/activeInactiveLoans").then((t) => t.data);
+export const GetActiveInactiveUsers = () =>
+  cliente.get("/activeInactiveUsers").then((t) => t.data);

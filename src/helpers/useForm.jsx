@@ -15,7 +15,7 @@ export const useForm = (initialForm, keys = []) => {
   const setUpFormState = (newState) => setFormState(newState);
 
   const handleValidateDisabledButtonSave = () => {
-    const k = keys?.length > 0 ? [...keys] : Object.keys(formState);
+    const k = keys?.length > 0 ? [...keys] : Object.keys(formState || {});
     for (const key in formState) {
       if (
         k.includes(key) &&
