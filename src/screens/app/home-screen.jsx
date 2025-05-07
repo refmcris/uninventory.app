@@ -2,9 +2,18 @@ import React from "react";
 import { LandingWrapper } from "../../wrappers";
 import { Button } from "primereact/button";
 import { Image } from "primereact/image";
-import { FaClock, FaLaptop, FaChartLine, FaCogs, FaUsers, FaShieldAlt } from "react-icons/fa";
+import {
+  FaClock,
+  FaLaptop,
+  FaChartLine,
+  FaCogs,
+  FaUsers,
+  FaShieldAlt
+} from "react-icons/fa";
+import { useLocation } from "wouter";
 
 export const HomeScreen = () => {
+  const [l, setLocation] = useLocation();
   return (
     <LandingWrapper>
       <div className="grid grid-nogutter surface-0 text-800">
@@ -15,7 +24,7 @@ export const HomeScreen = () => {
               style={{
                 fontFamily: "Bebas Neue, sans-serif",
                 fontSize: "80px",
-                color: "black",
+                color: "black"
               }}
             >
               OPTIMIZA LA GESTIÓN DE EQUIPOS DEL LABORATORIO
@@ -24,10 +33,13 @@ export const HomeScreen = () => {
               className="mt-0 mb-4 text-700 line-height-3"
               style={{
                 fontFamily: "Poppins, sans-serif",
-                fontSize: "18px",
+                fontSize: "18px"
               }}
             >
-              <strong>Uninventory</strong> es tu plataforma aliada para controlar y gestionar equipos electrónicos en laboratorios universitarios. Simplifica préstamos, evita pérdidas y mejora la experiencia de estudiantes y docentes.
+              <strong>Uninventory</strong> es tu plataforma aliada para
+              controlar y gestionar equipos electrónicos en laboratorios
+              universitarios. Simplifica préstamos, evita pérdidas y mejora la
+              experiencia de estudiantes y docentes.
             </p>
 
             <Button
@@ -35,6 +47,7 @@ export const HomeScreen = () => {
               type="button"
               className="mr-3 p-button-raised p-button-lg"
               style={{ backgroundColor: "#cd1f32", border: "none" }}
+              onClick={() => setLocation("/login")}
             />
           </section>
         </div>
@@ -50,7 +63,6 @@ export const HomeScreen = () => {
         </div>
       </div>
 
-      
       <div className="grid grid-nogutter text-center py-6 px-4 bg-gray-100">
         <div className="col-12 md:col-4 mb-4">
           <FaClock size={40} color="#cd1f32" />
@@ -69,10 +81,17 @@ export const HomeScreen = () => {
         </div>
       </div>
 
-      
       <div className="grid grid-nogutter text-center py-6 px-4">
         <div className="col-12 mb-6">
-          <h2 style={{ fontFamily: "Bebas Neue", fontSize: "48px", color: "#cd1f32" }}>¿Por qué elegir Uninventory?</h2>
+          <h2
+            style={{
+              fontFamily: "Bebas Neue",
+              fontSize: "48px",
+              color: "#cd1f32"
+            }}
+          >
+            ¿Por qué elegir Uninventory?
+          </h2>
         </div>
 
         <div className="col-12 md:col-4 p-4">
@@ -92,21 +111,31 @@ export const HomeScreen = () => {
         </div>
       </div>
 
-      
       <div className="text-center p-6 bg-gray-100">
-        <blockquote style={{ fontStyle: "italic", maxWidth: "600px", margin: "0 auto" }}>
-          “Desde que usamos Uninventory, el caos en los préstamos desapareció. Todo está bajo control. ¡Lo recomiendo totalmente!”
+        <blockquote
+          style={{ fontStyle: "italic", maxWidth: "600px", margin: "0 auto" }}
+        >
+          “Desde que usamos Uninventory, el caos en los préstamos desapareció.
+          Todo está bajo control. ¡Lo recomiendo totalmente!”
         </blockquote>
         <p className="mt-2 text-700">— Coordinador de laboratorio, Univalle</p>
       </div>
 
-      
       <div className="text-center p-6">
-        <h2 style={{ fontFamily: "Bebas Neue", fontSize: "48px", marginBottom: "1rem" }}>
+        <h2
+          style={{
+            fontFamily: "Bebas Neue",
+            fontSize: "48px",
+            marginBottom: "1rem"
+          }}
+        >
           ¡Haz parte de la nueva era de gestión tecnológica!
         </h2>
-        <p style={{ fontFamily: "Poppins", maxWidth: "600px", margin: "0 auto" }}>
-          Ya seas estudiante o docente, Uninventory te da las herramientas para trabajar de forma más organizada, segura y eficiente.
+        <p
+          style={{ fontFamily: "Poppins", maxWidth: "600px", margin: "0 auto" }}
+        >
+          Ya seas estudiante o docente, Uninventory te da las herramientas para
+          trabajar de forma más organizada, segura y eficiente.
         </p>
         <Button
           label="Probar Gratis"
@@ -116,9 +145,12 @@ export const HomeScreen = () => {
         />
       </div>
 
-  
-      <footer className="text-center p-4 text-600 bg-gray-200" style={{ fontFamily: "Poppins" }}>
-        © {new Date().getFullYear()} Uninventory — Proyecto académico desarrollado en la Universidad del Valle.
+      <footer
+        className="text-center p-4 text-600 bg-gray-200"
+        style={{ fontFamily: "Poppins" }}
+      >
+        © {new Date().getFullYear()} Uninventory — Proyecto académico
+        desarrollado en la Universidad del Valle.
       </footer>
     </LandingWrapper>
   );
