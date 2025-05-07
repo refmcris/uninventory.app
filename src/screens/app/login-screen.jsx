@@ -28,7 +28,7 @@ export const LoginScreen = () => {
       });
       console.log(formState);
       setLocation("/home");
-      localStorage.setItem("session", JSON.stringify(formatUserSession(login)));
+      localStorage.setItem("session", JSON.stringify(login));
     } catch (error) {
       ctc({
         error: "",
