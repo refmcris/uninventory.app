@@ -15,8 +15,10 @@ export const GetEquipment = (params) =>
 
 //loans
 
-export const GetLoans = (id) =>
+export const GetLoansById = (id) =>
   cliente.get(`loan/user/${id}`).then((t) => t.data);
+export const PostLoan = (data) =>
+  cliente.post("/loan", data).then((t) => t.data);
 
 //users
 export const LoginUser = (body) =>
@@ -30,7 +32,6 @@ export const GetUserById = (id) =>
 export const PutUser = (data) =>
   cliente.put(`/users/${data?.userId}`, data).then((t) => t.data);
 
-//Chart Endpoints
 export const GetActiveInactiveEquipments = () =>
   cliente.get("/activeInactiveEquipments").then((t) => t.data);
 export const GetActiveInactiveLoans = () =>
