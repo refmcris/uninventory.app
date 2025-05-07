@@ -111,16 +111,6 @@ export const HomeScreen = () => {
         </div>
       </div>
 
-      <div className="text-center p-6 bg-gray-100">
-        <blockquote
-          style={{ fontStyle: "italic", maxWidth: "600px", margin: "0 auto" }}
-        >
-          “Desde que usamos Uninventory, el caos en los préstamos desapareció.
-          Todo está bajo control. ¡Lo recomiendo totalmente!”
-        </blockquote>
-        <p className="mt-2 text-700">— Coordinador de laboratorio, Univalle</p>
-      </div>
-
       <div className="text-center p-6">
         <h2
           style={{
