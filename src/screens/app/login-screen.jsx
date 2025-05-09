@@ -26,7 +26,6 @@ export const LoginScreen = () => {
         email: formState?.username,
         userPassword: formState?.password
       });
-      console.log(formState);
       setLocation("/home");
       localStorage.setItem("session", JSON.stringify(login));
     } catch (error) {
