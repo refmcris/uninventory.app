@@ -1,11 +1,11 @@
-import React, { useState, useEffect  } from "react";
+import React, { useState, useEffect } from "react";
 import { UserLandingWrapper } from "../../wrappers";
 import { DataView } from "primereact/dataview";
 import { Dropdown } from "primereact/dropdown";
 import { Card } from "primereact/card";
 import { Tag } from "primereact/tag";
 import { Button } from "primereact/button";
-import { GetCategories, GetEquipment } from "../../helpers/api";
+import { GetCategories, GetEquipment, PostLoan } from "../../helpers/api";
 import { AddLoan } from "../../components";
 
 export const Equipment = () => {
@@ -13,54 +13,58 @@ export const Equipment = () => {
   const [sortField, setSortField] = useState("name");
   const [loaders, setLoaders] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
+  const [selectedEquipment, setSelectedEquipment] = useState(null);
 
   const [equipments, setEquipments] = useState([]);
   const [categories, setCategories] = useState([]);
 
-
-
   //hooks
+
+  //handlers
 
   const handleLoaders = (value) => setLoaders((t) => ({ ...t, ...value }));
 
   const handleGetEquipment = async () => {
     handleLoaders({ getEquipment: true });
-    try{
+    try {
       const response = await GetEquipment();
-      setEquipments(response)
+      setEquipments(response);
     } catch (error) {
-      console.log("error",error)
+      console.log("error", error);
     } finally {
       handleLoaders({ getEquipment: false });
     }
-  }
+  };
   const handleGetCategories = async () => {
     handleLoaders({ getCategories: true });
-    try{
+    try {
       const response = await GetCategories();
-      setCategories(response)
+      setCategories(response);
     } catch (error) {
-      console.log("error",error)
+      console.log("error", error);
     } finally {
       handleLoaders({ getCategories: false });
     }
-  }
+  };
+  const handleAddLoan = async ({ body }) => {
+    handleLoaders({ addLoan: true });
+    try {
+      const response = await PostLoan(body);
+      console.log("response", response);
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      handleLoaders({ addLoan: false });
+    }
+  };
 
-  
+  //bodys
 
-
-//bodys
-
-
- 
   const sortOptions = [
     { label: "Nombre A-Z", value: "name" },
     { label: "Disponibilidad", value: "availability" },
     { label: "Más Recientes", value: "newest" }
   ];
-
-
 
   const getStatusSeverity = (status) => {
     switch (status) {
@@ -91,7 +95,7 @@ export const Equipment = () => {
   const itemTemplate = (equipment) => {
     return (
       <div className="col-12 sm:col-6 lg:col-4 p-2">
-        <Card className="h-full flex flex-column" >
+        <Card className="h-full flex flex-column">
           <div className="flex flex-column flex-1">
             <div className="w-full h-20rem overflow-hidden">
               <img
@@ -128,7 +132,10 @@ export const Equipment = () => {
                 className="w-full"
                 disabled={equipment.status !== "available"}
                 style={{ backgroundColor: "#cd1f32" }}
-                onClick={() => setIsDialogOpen(true)}
+                onClick={() => {
+                  setSelectedEquipment(equipment);
+                  setIsDialogOpen(true);
+                }}
               />
             </div>
           </div>
@@ -137,13 +144,10 @@ export const Equipment = () => {
     );
   };
 
-
-
-
   useEffect(() => {
     handleGetEquipment();
-    handleGetCategories();  
-  }, []); 
+    handleGetCategories();
+  }, []);
 
   return (
     <UserLandingWrapper>
@@ -172,13 +176,15 @@ export const Equipment = () => {
             />
           </div>
         </div>
-              
-        <AddLoan 
-            visible={isDialogOpen}
-            onHide={() => setIsDialogOpen(false)}
-            loaders={loaders}
+
+        <AddLoan
+          visible={isDialogOpen}
+          onHide={() => setIsDialogOpen(false)}
+          loaders={loaders}
+          selectedEquipment={selectedEquipment}
+          handleAddLoan={handleAddLoan}
         />
-        
+
         <DataView
           value={equipments}
           layout="grid"
@@ -188,7 +194,6 @@ export const Equipment = () => {
           className="mt-4"
           emptyMessage="No hay equipos disponibles"
         />
-        
       </div>
     </UserLandingWrapper>
   );

@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { Menu } from "primereact/menu";
 import { useLocation } from "wouter";
 import { Avatar } from "primereact/avatar";
+import logo from "../../../image/logo.svg";
 
 const NavItem = ({ label, to, isActive, onClick }) => {
   return (
@@ -29,13 +30,29 @@ export const HeaderUser = () => {
   const handleNavigate = (to) => setLocation(to);
 
   const menuItems = [
-    { label: "Perfil", command: () => handleNavigate("/perfil") , icon: "pi pi-user" },
-    { label: "Préstamos Realizados", command: () => handleNavigate("/prestamos-realizados"), icon: "pi pi-list" },
+    {
+      label: "Perfil",
+      command: () => handleNavigate("/perfil"),
+      icon: "pi pi-user"
+    },
+    {
+      label: "Préstamos Realizados",
+      command: () => handleNavigate("/prestamos-realizados"),
+      icon: "pi pi-list"
+    },
+    {
+      label: "Dashboard",
+      icon: "pi pi-cog",
+      command: () => handleNavigate("/dashboard")
+    },
     { separator: true },
     {
       label: "Cerrar Sesión",
       icon: "pi pi-sign-out",
-      command: () => console.log("Cerrar sesión")
+      command: () => {
+        localStorage.removeItem("session");
+        setLocation("/");
+      }
     }
   ];
 
@@ -45,6 +62,7 @@ export const HeaderUser = () => {
       style={{ backgroundColor: "#cd1f32" }}
     >
       <div className="flex align-items-center gap-4">
+        <img src={logo} alt="Logo" style={{ width: "60px", height: "60px" }} />{" "}
         <h1
           className="text-5xl text-center pb-1 text-white m-0 cursor-pointer underline"
           onClick={() => setLocation("/home")}

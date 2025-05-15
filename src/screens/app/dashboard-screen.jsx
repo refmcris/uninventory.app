@@ -3,7 +3,7 @@ import { UserLandingWrapper } from "../../wrappers";
 import { GetEquipment } from "../../helpers/api";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
-import { DashboardPrimeReactSidebar } from '../../components/dashboard';
+import { DashboardPrimeReactSidebar } from "../../components/dashboard";
 import "primeicons/primeicons.css";
 import { useLocation } from "wouter";
 import { GetUsers } from "../../helpers/api";
@@ -13,7 +13,7 @@ export const DashboardScreen = () => {
     availableEquipments: "N/A",
     activeLoans: "N/A",
     registeredUsers: "N/A",
-    loanHistory: "N/A",
+    loanHistory: "N/A"
   });
   const [error, setError] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Estado para controlar la visibilidad
@@ -46,10 +46,7 @@ export const DashboardScreen = () => {
         );
 
         // Fetch users data
-        const usersData = await fetchDataFromAPI(
-          GetUsers,
-          "users"
-        );
+        const usersData = await fetchDataFromAPI(GetUsers, "users");
 
         // Calculate statistics based on API data
         const availableEquipmentsCount = equipmentsData
@@ -62,14 +59,14 @@ export const DashboardScreen = () => {
 
         // Update state with fetched statistics or "N/A" if fetch fails
         setStats({
-          availableEquipments: availableEquipmentsCount !== null
-            ? availableEquipmentsCount
-            : "N/A",
+          availableEquipments:
+            availableEquipmentsCount !== null
+              ? availableEquipmentsCount
+              : "N/A",
           activeLoans: activeLoansCount !== null ? activeLoansCount : "N/A",
-          registeredUsers: registeredUsersCount !== null
-            ? registeredUsersCount
-            : "N/A",
-          loanHistory: "N/A", // No data for loan history yet
+          registeredUsers:
+            registeredUsersCount !== null ? registeredUsersCount : "N/A",
+          loanHistory: "N/A" // No data for loan history yet
         });
         setError(false);
       } catch (fetchError) {
@@ -80,7 +77,7 @@ export const DashboardScreen = () => {
           availableEquipments: "N/A",
           activeLoans: "N/A",
           registeredUsers: "N/A",
-          loanHistory: "N/A",
+          loanHistory: "N/A"
         });
       }
     };
@@ -92,28 +89,28 @@ export const DashboardScreen = () => {
     {
       label: "Dashboard",
       path: "/dashboard",
-      icon: "pi pi-th-large",
+      icon: "pi pi-th-large"
     },
     {
       label: "Equipos Más Usados",
       path: "/mostUsedEquipments",
-      icon: "pi pi-star",
+      icon: "pi pi-star"
     },
     {
       label: "Equipos Activos/Inactivos",
       path: "/activeInactiveEquipments",
-      icon: "pi pi-box",
+      icon: "pi pi-box"
     },
     {
       label: "Préstamos Activos/Inactivos",
       path: "/activeInactiveLoans",
-      icon: "pi pi-clock",
+      icon: "pi pi-clock"
     },
     {
       label: "Usuarios Activos/Inactivos",
       path: "/activeInactiveUsers",
-      icon: "pi pi-users",
-    },
+      icon: "pi pi-users"
+    }
   ];
 
   // Datos para las tarjetas de estadísticas
@@ -121,18 +118,18 @@ export const DashboardScreen = () => {
     {
       title: "Equipos Disponibles",
       value: stats.availableEquipments,
-      icon: "pi pi-box",
+      icon: "pi pi-box"
     },
     {
       title: "Préstamos Activos",
       value: stats.activeLoans,
-      icon: "pi pi-clock",
+      icon: "pi pi-clock"
     },
     {
       title: "Usuarios Activos",
       value: stats.registeredUsers,
-      icon: "pi pi-users",
-    },
+      icon: "pi pi-users"
+    }
   ];
 
   // Navegación al hacer clic en el menú del sidebar
@@ -141,13 +138,15 @@ export const DashboardScreen = () => {
     setIsSidebarOpen(false); // Cierra el sidebar
   };
 
-  const sidebarHeader = <h2 className="text-xl font-semibold text-red-700">Menú</h2>;
+  const sidebarHeader = (
+    <h2 className="text-xl font-semibold text-red-700">Menú</h2>
+  );
 
   const floatingButton = {
     position: "fixed",
     top: "100px",
     left: "1rem",
-    zIndex: 40,
+    zIndex: 40
   };
 
   return (
@@ -205,9 +204,9 @@ export const DashboardScreen = () => {
                       {item.value}
                     </p>
                   </div>
-                  <i className={`${
-                    item.icon
-                  } text-3xl text-red-600 opacity-80`}></i>
+                  <i
+                    className={`${item.icon} text-3xl text-red-600 opacity-80`}
+                  ></i>
                 </div>
               </Card>
             ))}
