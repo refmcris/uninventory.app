@@ -19,7 +19,6 @@ cliente.interceptors.request.use(
 cliente.interceptors.response.use(
   (response) => {
     const sid = response.headers["session-id"];
-    console.log("response.headers", response.headers);
     if (sid) {
       localStorage.setItem("key", sid);
       cliente.defaults.headers["session-id"] = sid;
@@ -41,7 +40,6 @@ cliente.interceptors.response.use(
 cliente.defaults.baseURL = import.meta.env.VITE_API_URL;
 cliente.defaults.headers["Content-Type"] = "application/json";
 cliente.defaults.headers["session-id"] = null;
-console.log("cliente.defaults.baseURL", cliente.defaults.baseURL);
 
 //equipments and categories
 
@@ -49,6 +47,11 @@ export const GetCategories = () => cliente.get("/category").then((t) => t.data);
 
 export const GetEquipment = (params) =>
   cliente.get("/equipment", { params }).then((t) => t.data);
+
+export const AddEquipment = (data) =>
+  cliente.post("/equipment", data).then((t) => t.data);
+export const EditEquipment = (data) =>
+  cliente.put(`/equipment/${data?.equipmentId}`, data).then((t) => t.data);
 
 //loans
 
@@ -63,13 +66,17 @@ export const LoginUser = (body) =>
 export const RegisterUser = (body) =>
   cliente.post(`/users`, body).then((t) => t.data);
 
-export const GetUsers = () => cliente.get("/user").then((t) => t.data);
+export const GetUsers = () => cliente.get("/users").then((t) => t.data);
 
 export const GetUserById = (id) =>
   cliente.get(`/users/${id}`).then((t) => t.data);
 
 export const PutUser = (data) =>
   cliente.put(`/users/${data?.userId}`, data).then((t) => t.data);
+
+//role
+
+export const GetRoles = () => cliente.get("/userRole").then((t) => t.data);
 
 export const GetActiveInactiveEquipments = () =>
   cliente.get("/activeInactiveEquipments").then((t) => t.data);
