@@ -15,6 +15,7 @@ import {
   ActiveInactiveUsersScreen,
   EquipmentManagementScreen
 } from "../screens";
+import { UserManagement } from "../components";
 
 export const Router = () => {
   return (
@@ -49,6 +50,7 @@ export const Router = () => {
           path="/equipment-management"
           component={EquipmentManagementScreen}
         />
+        <Route path="/dashboard-usuarios" component={UserManagement} />
       </Switch>
     </>
   );
