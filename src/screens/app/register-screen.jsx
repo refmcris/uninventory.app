@@ -102,15 +102,18 @@ export const RegisterScreen = () => {
     if (validateForm()) {
       try {
         const register = await RegisterUser({
+        studentCode: formState?.codigo,
+        fullName: formState?.nombre,
+        lastName: formState?.apellido,
+        phone: formState?.telefono,
         email: formState?.username,
         userPassword: formState?.password
       });
         setLocation("/login");
-        localStorage.setItem("session", JSON.stringify(register));
       } catch (error) {
           ctc({
           error: "",
-          msg: "Error al iniciar sesión, usuario o contraseña no válidos",
+          msg: "Error al crear el usuario, intente de nuevo",
           toastRef
         });
       }
