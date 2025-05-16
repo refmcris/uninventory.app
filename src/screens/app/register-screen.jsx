@@ -6,16 +6,22 @@ import { Card } from "primereact/card";
 import { Password } from "primereact/password";
 import { Message } from "primereact/message";
 import { classNames } from "primereact/utils";
+import { RegisterUser } from "../../helpers";
 
 export const RegisterScreen = () => {
-  const [formData, setFormData] = useState({
-    codigo: "",
-    nombre: "",
-    apellido: "",
-    correo: "",
-    telefono: "",
-    password: ""
-  });
+
+  const [l, setLocation] = useLocation();
+    // refs
+    const toastRef = useRef(null);
+    // hooks
+    const { formState, onChange } = useForm({
+      codigo: "",
+      nombre: "",
+      apellido: "",
+      correo: "",
+      telefono: "",
+      password: ""
+    });
 
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
@@ -89,25 +95,25 @@ export const RegisterScreen = () => {
     return valid;
   };
 
-  const handleSubmit = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     setSubmitted(true);
 
     if (validateForm()) {
-      // Lógica para enviar los datos al backend
-      console.log("Formulario válido:", formData);
-    }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value
-    }));
-
-    if (submitted) {
-      validateForm();
+      try {
+        const register = await RegisterUser({
+        email: formState?.username,
+        userPassword: formState?.password
+      });
+        setLocation("/login");
+        localStorage.setItem("session", JSON.stringify(register));
+      } catch (error) {
+          ctc({
+          error: "",
+          msg: "Error al iniciar sesión, usuario o contraseña no válidos",
+          toastRef
+        });
+      }
     }
   };
 
@@ -128,7 +134,7 @@ export const RegisterScreen = () => {
           <Card className="w-11 md:w-30rem mx-auto my-4 ">
             <h2 className="text-center mb-6 text-2xl">Registro de Usuario</h2>
 
-            <form onSubmit={handleSubmit} className="flex flex-column gap-4">
+            <form onSubmit={handleRegister} className="flex flex-column gap-4">
               <div className="field mb-3">
                 <label htmlFor="codigo" className="block mb-2 font-medium">
                   Código *
@@ -136,8 +142,8 @@ export const RegisterScreen = () => {
                 <InputText
                   id="codigo"
                   name="codigo"
-                  value={formData.codigo}
-                  onChange={handleChange}
+                  value={formState?.codigo}
+                  onChange={onChange}
                   placeholder="Ingrese su código de estudiante"
                   className={classNames("w-full", {
                     "p-invalid": isFormFieldValid("codigo")
@@ -156,8 +162,8 @@ export const RegisterScreen = () => {
                 <InputText
                   id="nombre"
                   name="nombre"
-                  value={formData.nombre}
-                  onChange={handleChange}
+                  value={formState?.nombre}
+                  onChange={onChange}
                   placeholder="Ingrese su nombre"
                   className={classNames("w-full", {
                     "p-invalid": isFormFieldValid("nombre")
@@ -174,8 +180,8 @@ export const RegisterScreen = () => {
                 <InputText
                   id="apellido"
                   name="apellido"
-                  value={formData.apellido}
-                  onChange={handleChange}
+                  value={formState?.apellido}
+                  onChange={onChange}
                   placeholder="Ingrese su apellido"
                   className={classNames("w-full", {
                     "p-invalid": isFormFieldValid("apellido")
@@ -191,8 +197,8 @@ export const RegisterScreen = () => {
                 <InputText
                   id="correo"
                   name="correo"
-                  value={formData.correo}
-                  onChange={handleChange}
+                  value={formState?.correo}
+                  onChange={onChange}
                   placeholder="usuario@correounivalle.edu.co"
                   className={classNames("w-full", {
                     "p-invalid": isFormFieldValid("correo")
@@ -210,8 +216,8 @@ export const RegisterScreen = () => {
                 <InputText
                   id="telefono"
                   name="telefono"
-                  value={formData.telefono}
-                  onChange={handleChange}
+                  value={formState?.telefono}
+                  onChange={onChange}
                   placeholder="Ingrese su teléfono"
                   className={classNames("w-full", {
                     "p-invalid": isFormFieldValid("telefono")
@@ -229,8 +235,8 @@ export const RegisterScreen = () => {
                 <Password
                   id="password"
                   name="password"
-                  value={formData.password}
-                  onChange={handleChange}
+                  value={formState?.password}
+                  onChange={onChange}
                   placeholder="Ingrese su contraseña"
                   className={classNames({
                     "p-invalid": isFormFieldValid("password")
@@ -268,6 +274,7 @@ export const RegisterScreen = () => {
           </Card>
         </div>
       </div>
+      <Toast ref={toastRef} />
     </LandingWrapperLogin>
   );
 };
