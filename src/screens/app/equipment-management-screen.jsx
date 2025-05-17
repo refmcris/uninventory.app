@@ -41,7 +41,6 @@ export const EquipmentManagementScreen = () => {
     try {
       await AddEquipment(body);
       setAddEquipment(false);
-
       handleToastDone({
         msg: "Equipo agreado",
         toastRef

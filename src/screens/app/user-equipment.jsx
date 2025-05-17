@@ -50,7 +50,6 @@ export const Equipment = () => {
     handleLoaders({ addLoan: true });
     try {
       const response = await PostLoan(body);
-      console.log("response", response);
     } catch (error) {
       console.log("error", error);
     } finally {

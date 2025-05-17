@@ -5,10 +5,11 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { InputNumber } from "primereact/inputnumber";
 
-import { ctc, GetCategories, useForm } from "../../helpers";
+import { ctc, GetCategories, UploadImage, useForm } from "../../helpers";
 import { useState } from "react";
 import { Dropdown } from "primereact/dropdown";
 import { Calendar } from "primereact/calendar";
+import { FileUpload } from "primereact/fileupload";
 
 export const AddEquipmentDialog = ({ visible, onHide, onAddEquipment }) => {
   //states
@@ -16,6 +17,9 @@ export const AddEquipmentDialog = ({ visible, onHide, onAddEquipment }) => {
   const [loading, setLoading] = useState(false);
   const [disableButtonSave, setDisableButtonSave] = useState(true);
   const [categories, setCategories] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const [imageUploadedUrl, setImageUploadedUrl] = useState(null);
 
   //refs
 
@@ -36,6 +40,19 @@ export const AddEquipmentDialog = ({ visible, onHide, onAddEquipment }) => {
   const onSave = async (e) => {
     e?.preventDefault();
     try {
+      let imageUrl = null;
+
+      if (selectedFile) {
+        await UploadImage(
+          selectedFile,
+          setLoading,
+          (url) => {
+            imageUrl = url;
+            setImageUploadedUrl(url);
+          },
+          () => {}
+        );
+      }
       const body = {
         categoryId: formState?.categoriaId,
         name: formState?.nombre,
@@ -44,7 +61,7 @@ export const AddEquipmentDialog = ({ visible, onHide, onAddEquipment }) => {
         status: formState?.estado,
         purchaseDate: formState?.fechaDeCompra,
         warrantyDate: formState?.garantia,
-        image: formState?.imagen,
+        image: imageUrl,
         model: formState?.modelo,
         description: formState?.descripcion,
         specifications: formState?.especificaciones
@@ -88,6 +105,9 @@ export const AddEquipmentDialog = ({ visible, onHide, onAddEquipment }) => {
       descripcion: null,
       especificaciones: null
     });
+    setSelectedFile(null);
+    setPreviewUrl(null);
+    setImageUploadedUrl(null);
     onHide && onHide();
   };
 
@@ -242,12 +262,34 @@ export const AddEquipmentDialog = ({ visible, onHide, onAddEquipment }) => {
 
           <div className="flex flex-column gap-2">
             <label>Imagen</label>
-            <InputText
+
+            <FileUpload
+              mode="basic"
               name="imagen"
-              value={formState.imagen}
-              onChange={onChange}
-              className="w-full"
+              accept="image/*"
+              maxFileSize={5 * 1024 * 1024}
+              chooseLabel="Seleccionar imagen"
+              customUpload
+              onSelect={(e) => {
+                const file = e.files[0];
+                if (!file) return;
+
+                setSelectedFile(file);
+                setPreviewUrl(URL.createObjectURL(file));
+              }}
             />
+
+            {previewUrl && (
+              <img
+                src={previewUrl}
+                alt="Vista previa"
+                style={{
+                  maxHeight: "150px",
+                  marginTop: "10px",
+                  borderRadius: "8px"
+                }}
+              />
+            )}
           </div>
         </form>
       </div>
