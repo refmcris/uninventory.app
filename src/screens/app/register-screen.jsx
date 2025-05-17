@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useRef, useState, useEffect } from 'react';
 import { LandingWrapperLogin } from "../../wrappers";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
@@ -6,22 +6,24 @@ import { Card } from "primereact/card";
 import { Password } from "primereact/password";
 import { Message } from "primereact/message";
 import { classNames } from "primereact/utils";
-import { RegisterUser } from "../../helpers";
+import { ctc, RegisterUser, useForm } from "../../helpers";
+import { useLocation } from "wouter";
+import { Toast } from "primereact/toast";
 
 export const RegisterScreen = () => {
 
   const [l, setLocation] = useLocation();
-    // refs
-    const toastRef = useRef(null);
-    // hooks
-    const { formState, onChange } = useForm({
-      codigo: "",
-      nombre: "",
-      apellido: "",
-      correo: "",
-      telefono: "",
-      password: ""
-    });
+  // refs
+  const toastRef = useRef(null);
+  // hooks
+  const { formState, onChange } = useForm({
+    codigo: "",
+    nombre: "",
+    apellido: "",
+    correo: "",
+    telefono: "",
+    password: ""
+});
 
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
@@ -32,38 +34,38 @@ export const RegisterScreen = () => {
 
     // Validación de código
     const codeRegex = /^[0-9]{9}$/;
-    if (!formData.codigo) {
+    if (!formState?.codigo) {
       newErrors.codigo = "El código es requerido";
       valid = false;
-    } else if (!codeRegex.test(formData.codigo)) {
+    } else if (!codeRegex.test(formState?.codigo)) {
       newErrors.codigo = "El código debe de tener 9 dígitos";
       valid = false;
     }
 
     // Validación de nombre
-    if (!formData.nombre.trim()) {
+    if (!formState?.nombre.trim()) {
       newErrors.nombre = "El nombre es requerido";
       valid = false;
-    } else if (formData.nombre.length < 2) {
+    } else if (formState?.nombre.length < 2) {
       newErrors.nombre = "El nombre debe tener al menos 2 caracteres";
       valid = false;
     }
 
     // Validación de apellido
-    if (!formData.apellido.trim()) {
+    if (!formState?.apellido.trim()) {
       newErrors.apellido = "El apellido es requerido";
       valid = false;
     }
 
     // Validación de correo
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.correo) {
+    if (!formState?.correo) {
       newErrors.correo = "El correo es requerido";
       valid = false;
-    } else if (!emailRegex.test(formData.correo)) {
+    } else if (!emailRegex.test(formState?.correo)) {
       newErrors.correo = "Correo electrónico inválido";
       valid = false;
-    } else if (!formData.correo.endsWith("@correounivalle.edu.co")) {
+    } else if (!formState?.correo.endsWith("@correounivalle.edu.co")) {
       newErrors.correo =
         "Debe usar un correo institucional (@correounivalle.edu.co)";
       valid = false;
@@ -71,10 +73,10 @@ export const RegisterScreen = () => {
 
     // Validación de teléfono
     const phoneRegex = /^[0-9]{10}$/;
-    if (!formData.telefono) {
+    if (!formState?.telefono) {
       newErrors.telefono = "El teléfono es requerido";
       valid = false;
-    } else if (!phoneRegex.test(formData.telefono)) {
+    } else if (!phoneRegex.test(formState?.telefono)) {
       newErrors.telefono = "Teléfono debe tener 10 dígitos";
       valid = false;
     }
@@ -82,10 +84,10 @@ export const RegisterScreen = () => {
     // Validación de contraseña
     const passwordRegex =
       /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!formData.password) {
+    if (!formState?.password) {
       newErrors.password = "La contraseña es requerida";
       valid = false;
-    } else if (!passwordRegex.test(formData.password)) {
+    } else if (!passwordRegex.test(formState?.password)) {
       newErrors.password =
         "La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un carácter especial";
       valid = false;
@@ -101,18 +103,28 @@ export const RegisterScreen = () => {
 
     if (validateForm()) {
       try {
+        console.log('Datos que se enviarán al backend:', {
+        studentCode: formState?.codigo,
+        fullName: formState?.nombre,
+        lastName: formState?.apellido,
+        phone: formState?.telefono,
+        email: formState?.correo,
+        userPassword: formState?.password
+      });
+
         const register = await RegisterUser({
         studentCode: formState?.codigo,
         fullName: formState?.nombre,
         lastName: formState?.apellido,
         phone: formState?.telefono,
-        email: formState?.username,
+        email: formState?.correo,
         userPassword: formState?.password
       });
+        console.log('Respuesta del backend:', register);
         setLocation("/login");
       } catch (error) {
           ctc({
-          error: "",
+          error: error,
           msg: "Error al crear el usuario, intente de nuevo",
           toastRef
         });
