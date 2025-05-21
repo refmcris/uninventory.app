@@ -18,6 +18,8 @@ export const AddLoan = ({
   const [dates, setDates] = useState(null);
   const [hours, setHours] = useState(null);
 
+  const sessionData = JSON.parse(localStorage.getItem("session"));
+
   let today = new Date();
   const maxDate = new Date();
   maxDate.setDate(today.getDate() + 7);
@@ -65,42 +67,61 @@ export const AddLoan = ({
     </div>
   );
 
-  useEffect(() => {
-    console.log("selectedEquipment", selectedEquipment);
-  }, [selectedEquipment]);
-
   return (
     <Dialog
       visible={visible}
       onHide={handleHide}
       header="Solicitar Préstamo"
-      className="w-6 md:w-4"
       draggable={false}
       footer={bodyFooter}
+      breakpoints={{ "960px": "75vw", "640px": "95vw" }}
+      style={{ width: "50vw" }}
     >
-      <form className="w-full flex flex-column gap-2">
-        <LabelInputRow label="Codigo Estudiante">
-          <InputText className="w-full" value="TO DO" />
-        </LabelInputRow>
-        <LabelInputRow label="Nombre de estudiante">
-          <InputText className="w-full" value="TO DO" />
-        </LabelInputRow>
-        <LabelInputRow label="Equipo">
+      <form id="add-loan-form" className="w-full flex flex-column gap-3 p-1">
+        <div className="flex flex-column gap-1">
+          <label htmlFor="studentCode">Código Estudiante</label>
           <InputText
+            id="studentCode"
+            className="w-full"
+            value={sessionData?.studentCode}
+            disabled
+          />
+        </div>
+
+        <div className="flex flex-column gap-1">
+          <label htmlFor="studentName">Nombre de Estudiante</label>
+          <InputText
+            id="studentName"
+            className="w-full"
+            value={sessionData?.fullName}
+            disabled
+          />
+        </div>
+
+        <div className="flex flex-column gap-1">
+          <label htmlFor="equipment">Equipo</label>
+          <InputText
+            id="equipment"
             className="w-full"
             value={selectedEquipment?.name || ""}
-            readOnly
+            disabled
           />
-        </LabelInputRow>
-        <LabelInputRow label="Descripción del equipo">
+        </div>
+
+        <div className="flex flex-column gap-1">
+          <label htmlFor="description">Descripción del equipo</label>
           <InputText
+            id="description"
             className="w-full"
             value={selectedEquipment?.specifications || ""}
-            readOnly
+            disabled
           />
-        </LabelInputRow>
-        <LabelInputRow label="Fechas de préstamo">
+        </div>
+
+        <div className="flex flex-column gap-1">
+          <label htmlFor="loanDates">Fechas de préstamo</label>
           <Calendar
+            id="loanDates"
             value={dates}
             onChange={(e) => setDates(e.value)}
             showIcon
@@ -114,7 +135,7 @@ export const AddLoan = ({
             minTime={new Date(0, 0, 0, 7, 0)}
             maxTime={new Date(0, 0, 0, 19, 0)}
           />
-        </LabelInputRow>
+        </div>
       </form>
     </Dialog>
   );

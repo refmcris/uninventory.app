@@ -3,8 +3,9 @@ import { Dialog } from "primereact/dialog";
 import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import React, { useEffect, useState } from "react";
-import { GetCategories, useForm } from "../../helpers";
+import { GetCategories, UploadImage, useForm } from "../../helpers";
 import { Button } from "primereact/button";
+import { FileUpload } from "primereact/fileupload";
 
 export const EditEquipmentDialog = ({
   visible,
@@ -13,7 +14,11 @@ export const EditEquipmentDialog = ({
   selectedEquipment
 }) => {
   //states
+  const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const [imageUploadedUrl, setImageUploadedUrl] = useState(null);
 
   const {
     formState,
@@ -70,12 +75,30 @@ export const EditEquipmentDialog = ({
 
   const onEdit = async (e) => {
     e.preventDefault();
+    let imageUrl = null;
+
+    if (selectedFile) {
+      await UploadImage(
+        selectedFile,
+        setLoading,
+        (url) => {
+          imageUrl = url;
+          formState.image = imageUrl;
+          setImageUploadedUrl(url);
+        },
+        () => {}
+      );
+    }
+
     onEditEquipment(formState);
 
     handleHide();
   };
   const handleHide = () => {
     onHide && onHide();
+    setSelectedFile(null);
+    setPreviewUrl(null);
+    setImageUploadedUrl(null);
   };
 
   const status = [
@@ -94,7 +117,6 @@ export const EditEquipmentDialog = ({
     if (selectedEquipment) {
       setUpFormState(selectedEquipment);
     }
-    console.log(selectedEquipment);
   }, [selectedEquipment]);
 
   return (
@@ -223,12 +245,33 @@ export const EditEquipmentDialog = ({
 
           <div className="flex flex-column gap-2">
             <label>Imagen</label>
-            <InputText
-              name="image"
-              value={formState?.image}
-              onChange={onChange}
-              className="w-full"
+            <FileUpload
+              mode="basic"
+              name="imagen"
+              accept="image/*"
+              maxFileSize={5 * 1024 * 1024}
+              chooseLabel="Seleccionar imagen"
+              customUpload
+              onSelect={(e) => {
+                const file = e.files[0];
+                if (!file) return;
+
+                setSelectedFile(file);
+                setPreviewUrl(URL.createObjectURL(file));
+              }}
             />
+
+            {previewUrl && (
+              <img
+                src={previewUrl}
+                alt="Vista previa"
+                style={{
+                  maxHeight: "150px",
+                  marginTop: "10px",
+                  borderRadius: "8px"
+                }}
+              />
+            )}
           </div>
         </form>
       </div>

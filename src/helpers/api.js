@@ -49,7 +49,13 @@ export const GetEquipment = (params) =>
   cliente.get("/equipment", { params }).then((t) => t.data);
 
 export const AddEquipment = (data) =>
-  cliente.post("/equipment", data).then((t) => t.data);
+  cliente
+    .post("/equipment", data, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    })
+    .then((t) => t.data);
 export const EditEquipment = (data) =>
   cliente.put(`/equipment/${data?.equipmentId}`, data).then((t) => t.data);
 

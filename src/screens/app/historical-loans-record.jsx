@@ -19,7 +19,6 @@ export const HistoricalLoans = () => {
     handleLoaders({ getLoans: true });
     try {
       const response = await GetLoansById(session?.id);
-      console.log(response);
       setLoans(response);
     } catch (error) {
       console.log("error", error);

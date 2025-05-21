@@ -50,7 +50,6 @@ export const Equipment = () => {
     handleLoaders({ addLoan: true });
     try {
       const response = await PostLoan(body);
-      console.log("response", response);
     } catch (error) {
       console.log("error", error);
     } finally {
@@ -70,9 +69,11 @@ export const Equipment = () => {
     switch (status) {
       case "available":
         return "success";
-      case "in_use":
+      case "in_loan":
         return "warning";
-      case "maintenance":
+      case "repairing":
+        return "danger";
+      case "in_warranty":
         return "danger";
       default:
         return "info";
@@ -83,10 +84,12 @@ export const Equipment = () => {
     switch (status) {
       case "available":
         return "Disponible";
-      case "in_use":
+      case "in_loan":
         return "En Uso";
-      case "maintenance":
+      case "repairing":
         return "En Mantenimiento";
+      case "in_warranty":
+        return "En Garantía";
       default:
         return "Desconocido";
     }

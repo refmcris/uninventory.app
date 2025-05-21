@@ -13,10 +13,11 @@ import { Toast } from "primereact/toast";
 import { Column } from "primereact/column";
 import { Tooltip } from "primereact/tooltip";
 import { EditUserDialog } from "./edit-user-dialog";
+import { DashboardLayout } from "../../../layouts";
 
 export const UserManagement = () => {
   const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [loaders, setLoaders] = useState({});
 
   //refs
@@ -39,13 +40,18 @@ export const UserManagement = () => {
   const OnEditUser = async (body) => {
     try {
       await PutUser(body);
-      setSelectedUser(null);
       handleToastDone({
         msg: "Usuario editado con exito",
         toastRef
       });
+      handleGetUsers(); // Actualizar la lista después de editar
+      setSelectedUser(null); // Cerrar el diálogo
     } catch (error) {
       console.error("error", error);
+      ctc({
+        msg: "Error al editar el usuario",
+        toastRef
+      });
     }
   };
 
@@ -53,11 +59,8 @@ export const UserManagement = () => {
     return (
       <Button
         icon="pi pi-pencil"
-        className="p-button-rounded  mr-2"
-        onClick={() => {
-          editButtonTemplate(true);
-          setSelectedUser(rowData);
-        }}
+        className="p-button-rounded mr-2"
+        onClick={() => setSelectedUser(rowData)}
       />
     );
   };
@@ -146,7 +149,7 @@ export const UserManagement = () => {
   }, []);
 
   return (
-    <UserLandingWrapper>
+    <DashboardLayout>
       <div className="w-full p-4">
         <div className="flex justify-content-between align-items-center mb-4">
           <h1 className="text-3xl font-bold text-gray-900">
@@ -234,13 +237,13 @@ export const UserManagement = () => {
           </DataTable>
         </div>
         <EditUserDialog
-          visible={selectedUser}
-          onHide={() => setSelectedUser(false)}
+          visible={selectedUser !== null}
+          onHide={() => setSelectedUser(null)}
           onEditUser={OnEditUser}
           selectedUser={selectedUser}
         />
       </div>
       <Toast ref={toastRef} />
-    </UserLandingWrapper>
+    </DashboardLayout>
   );
 };

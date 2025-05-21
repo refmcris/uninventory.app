@@ -22,10 +22,7 @@ const NavItem = ({ label, to, isActive, onClick }) => {
 export const HeaderUser = () => {
   const [l, setLocation] = useLocation();
   const menuRef = useRef(null);
-  const session = {
-    fullname: "CristianTestB",
-    role: "estudiante"
-  };
+  const session = JSON.parse(localStorage.getItem("session"));
 
   const handleNavigate = (to) => setLocation(to);
 
@@ -40,11 +37,15 @@ export const HeaderUser = () => {
       command: () => handleNavigate("/prestamos-realizados"),
       icon: "pi pi-list"
     },
-    {
-      label: "Dashboard",
-      icon: "pi pi-cog",
-      command: () => handleNavigate("/dashboard")
-    },
+    ...(session?.userRoleName === "ADMIN"
+      ? [
+          {
+            label: "Dashboard",
+            icon: "pi pi-cog",
+            command: () => handleNavigate("/dashboard")
+          }
+        ]
+      : []),
     { separator: true },
     {
       label: "Cerrar Sesión",
@@ -88,10 +89,9 @@ export const HeaderUser = () => {
           onClick={(e) => menuRef.current.toggle(e)}
         >
           <Avatar
-            //label={!session?.image ? session?.fullname?.slice(0, 2)?.toUpperCase() : undefined}
+            label={session?.fullName?.slice(0, 2)?.toUpperCase()}
             shape="circle"
-            className="bg-primary text-white text-xl font-bold border-circle w-3rem h-3rem flex items-center justify-center mr-2"
-            image="https://res.cloudinary.com/ds6fxjeak/image/upload/v1735940456/GYw8am3WAAkYOj5_aoftgl.jpg"
+            className=" text-white text-xl font-bold border-circle w-3rem h-3rem flex items-center justify-center mr-2"
           />
           <i className="pi pi-chevron-down text-white text-lg mt-3" />
         </div>

@@ -16,6 +16,7 @@ import { AddEquipmentDialog } from "../../components/equipments/add-equipment-di
 import { Toast } from "primereact/toast";
 import { EditEquipmentDialog } from "../../components/equipments/edit-equipment-dialog";
 import { Tooltip } from "primereact/tooltip";
+import { DashboardLayout } from "../../layouts";
 
 export const EquipmentManagementScreen = () => {
   const [equipments, setEquipments] = useState([]);
@@ -41,7 +42,6 @@ export const EquipmentManagementScreen = () => {
     try {
       await AddEquipment(body);
       setAddEquipment(false);
-
       handleToastDone({
         msg: "Equipo agreado",
         toastRef
@@ -178,7 +178,7 @@ export const EquipmentManagementScreen = () => {
     HandleGetEquipments();
   }, []);
   return (
-    <UserLandingWrapper>
+    <DashboardLayout>
       <div className=" w-full  p-4">
         <div className="flex justify-content-between align-items-center mb-4">
           <h1 className="text-3xl font-bold text-gray-900">
@@ -300,6 +300,6 @@ export const EquipmentManagementScreen = () => {
         />
       </div>
       <Toast ref={toastRef} />
-    </UserLandingWrapper>
+    </DashboardLayout>
   );
 };
