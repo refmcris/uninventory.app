@@ -18,9 +18,10 @@ export const UserProfile = () => {
   const [user, setUser] = useState(null);
   const [loaders, setLoaders] = useState(false);
 
-  const toastRef = useRef();
+  localStorage.getItem("session");
+  const session = JSON.parse(localStorage.getItem("session"));
 
-  const id = 3;
+  const toastRef = useRef();
 
   const handleLoaders = (value) => setLoaders((t) => ({ ...t, ...value }));
 
@@ -35,18 +36,6 @@ export const UserProfile = () => {
   };
 
   // hooks
-
-  const handleGetInfo = async () => {
-    handleLoaders({ getUser: true });
-    try {
-      const response = await GetUserById(id);
-      setUser(response);
-    } catch (error) {
-      console.log("error", error);
-    } finally {
-      handleLoaders({ getUser: false });
-    }
-  };
 
   const handleSubmit = async () => {
     handleLoaders({ getUser: true });
@@ -72,12 +61,6 @@ export const UserProfile = () => {
       [name]: name === "studentCode" ? parseInt(value) || 0 : value
     }));
   };
-
-  //bodys
-
-  useEffect(() => {
-    handleGetInfo();
-  }, []);
 
   const bodyFooter = (
     <div className="w-full flex gap-2">
@@ -110,7 +93,7 @@ export const UserProfile = () => {
         >
           <div className="p-d-flex p-flex-column">
             <Avatar
-              image="https://res.cloudinary.com/ds6fxjeak/image/upload/v1735940456/GYw8am3WAAkYOj5_aoftgl.jpg"
+              label={session?.fullName?.slice(0, 2)?.toUpperCase()}
               shape="circle"
               className="p-mb-3"
               style={{ width: "6rem", height: "6rem" }}
@@ -125,16 +108,16 @@ export const UserProfile = () => {
             <div className="p-text-left" style={{ width: "100%" }}>
               <h3>Información Personal</h3>
               <p>
-                <strong>Código de estudiante:</strong> {user?.studentCode}
+                <strong>Código de estudiante:</strong> {session?.studentCode}
               </p>
 
               <p>
                 <strong>Nombre completo:</strong>{" "}
-                {`${user?.fullName} ${user?.lastName}`}
+                {`${session?.fullName} ${session?.lastName}`}
               </p>
 
               <p>
-                <strong>Correo electrónico:</strong> {user?.email}
+                <strong>Correo electrónico:</strong> {session?.email}
               </p>
             </div>
           </div>
