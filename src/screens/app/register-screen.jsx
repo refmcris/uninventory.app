@@ -104,7 +104,7 @@ export const RegisterScreen = () => {
     if (validateForm()) {
       try {
         console.log('Datos que se enviarán al backend:', {
-        studentCode: formState?.codigo,
+        studentCode: parseInt(formState?.codigo),
         fullName: formState?.nombre,
         lastName: formState?.apellido,
         phone: formState?.telefono,
@@ -113,12 +113,13 @@ export const RegisterScreen = () => {
       });
 
         const register = await RegisterUser({
-        studentCode: formState?.codigo,
-        fullName: formState?.nombre,
-        lastName: formState?.apellido,
-        phone: formState?.telefono,
-        email: formState?.correo,
-        userPassword: formState?.password
+        StudentCode: formState?.codigo,
+        FullName: formState?.nombre,
+        LastName: formState?.apellido,
+        Phone: formState?.telefono,
+        Email: formState?.correo,
+        UserRole: 2,
+        UserPassword: formState?.password
       });
         console.log('Respuesta del backend:', register);
         setLocation("/login");
@@ -243,11 +244,11 @@ export const RegisterScreen = () => {
                 {getFormErrorMessage("telefono")}
               </div>
 
-              <div className="field mb-3 w-full">
+              <div className="field mb-3">
                 <label htmlFor="password" className="block mb-2 font-medium">
                   Contraseña *
                 </label>
-                <Password
+                <InputText
                   id="password"
                   name="password"
                   value={formState?.password}
