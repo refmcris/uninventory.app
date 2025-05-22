@@ -102,15 +102,6 @@ export const RegisterScreen = () => {
 
     if (validateForm()) {
       try {
-        console.log("Datos que se enviarán al backend:", {
-          studentCode: parseInt(formState?.codigo),
-          fullName: formState?.nombre,
-          lastName: formState?.apellido,
-          phone: formState?.telefono,
-          email: formState?.correo,
-          userPassword: formState?.password
-        });
-
         const register = await RegisterUser({
           StudentCode: formState?.codigo,
           FullName: formState?.nombre,
@@ -120,7 +111,7 @@ export const RegisterScreen = () => {
           UserRoleId: 2,
           UserPassword: formState?.password
         });
-        console.log("Respuesta del backend:", register);
+
         setLocation("/login");
       } catch (error) {
         ctc({

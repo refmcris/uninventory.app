@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { UserLandingWrapper } from "../../wrappers";
 import { DataView } from "primereact/dataview";
 import { Dropdown } from "primereact/dropdown";
@@ -7,6 +7,7 @@ import { Tag } from "primereact/tag";
 import { Button } from "primereact/button";
 import { GetCategories, GetEquipment, PostLoan } from "../../helpers/api";
 import { AddLoan } from "../../components";
+import { Toast } from "primereact/toast";
 
 export const Equipment = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -17,6 +18,8 @@ export const Equipment = () => {
 
   const [equipments, setEquipments] = useState([]);
   const [categories, setCategories] = useState([]);
+
+  const toastRef = useRef();
 
   //hooks
 
@@ -30,7 +33,10 @@ export const Equipment = () => {
       const response = await GetEquipment();
       setEquipments(response);
     } catch (error) {
-      console.log("error", error);
+      ctc({
+        msg: "Error al obtener los equipos",
+        toastRef
+      });
     } finally {
       handleLoaders({ getEquipment: false });
     }
@@ -41,7 +47,10 @@ export const Equipment = () => {
       const response = await GetCategories();
       setCategories(response);
     } catch (error) {
-      console.log("error", error);
+      ctc({
+        msg: "Error al obtener las categorías",
+        toastRef
+      });
     } finally {
       handleLoaders({ getCategories: false });
     }
@@ -51,7 +60,10 @@ export const Equipment = () => {
     try {
       const response = await PostLoan(body);
     } catch (error) {
-      console.log("error", error);
+      ctc({
+        msg: "Error al solicitar el préstamo",
+        toastRef
+      });
     } finally {
       handleLoaders({ addLoan: false });
     }
@@ -198,6 +210,7 @@ export const Equipment = () => {
           emptyMessage="No hay equipos disponibles"
         />
       </div>
+      <Toast ref={toastRef} />
     </UserLandingWrapper>
   );
 };
