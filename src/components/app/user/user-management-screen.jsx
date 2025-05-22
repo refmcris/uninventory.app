@@ -20,6 +20,8 @@ export const UserManagement = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [loaders, setLoaders] = useState({});
 
+  const sessionData = JSON.parse(localStorage.getItem("session"));
+
   //refs
   const toastRef = useRef();
   const handleLoaders = (value) => setLoaders((t) => ({ ...t, ...value }));
@@ -96,7 +98,7 @@ export const UserManagement = () => {
         cols,
         data: data,
         sheetName: "Usuarios",
-        creator: "awo",
+        creator: sessionData?.fullName,
         handleToastDone,
         handleLoading: handleLoaders
       });

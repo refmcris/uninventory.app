@@ -2,9 +2,9 @@ import { Header } from "../components";
 
 export const LandingWrapper = ({ children }) => {
   return (
-    <div style={{ paddingTop: '5rem' }}>
+    <div className="min-h-screen flex flex-column bg-gray-50">
       <Header />
-      <div >{children}</div>
+      <main className="flex-grow w-full">{children}</main>
     </div>
   );
 };

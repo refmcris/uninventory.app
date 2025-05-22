@@ -19,46 +19,37 @@ export const UserHomeScreen = () => {
   return (
     <UserLandingWrapper>
       <div className="grid grid-nogutter surface-0 text-800">
-        <div className="col-12 md:col-6 p-6 text-center md:text-left flex align-items-center">
+        <div className="col-12 md:col-6 p-4 md:p-6 text-center md:text-left flex align-items-center">
           <section>
             <span
-              className="block mb-3"
-              style={{
-                fontFamily: "Bebas Neue, sans-serif",
-                fontSize: "80px",
-                color: "black"
-              }}
+              className="block mb-3 text-3xl md:text-6xl"
+              style={{ fontFamily: "Bebas Neue, sans-serif", color: "black" }}
             >
               OPTIMIZA LA GESTIÓN DE EQUIPOS DEL LABORATORIO
             </span>
             <p
-              className="mt-0 mb-4 text-700 line-height-3"
-              style={{
-                fontFamily: "Poppins, sans-serif",
-                fontSize: "18px"
-              }}
+              className="mt-0 mb-4 text-700 line-height-3 text-base md:text-lg"
+              style={{ fontFamily: "Poppins, sans-serif" }}
             >
               <strong>Uninventory</strong> es tu plataforma aliada para
               controlar y gestionar equipos electrónicos en laboratorios
               universitarios. Simplifica préstamos, evita pérdidas y mejora la
               experiencia de estudiantes y docentes.
             </p>
-
             <Button
               label="¡Reserva ahora!"
               type="button"
-              className="mr-3 p-button-raised p-button-lg"
+              className="mr-3 p-button-raised p-button-lg w-full md:w-auto"
               style={{ backgroundColor: "#cd1f32", border: "none" }}
               onClick={() => setLocation("/equipos")}
             />
           </section>
         </div>
-
-        <div className="col-12 md:col-6 overflow-hidden">
+        <div className="col-12 md:col-6 overflow-hidden flex justify-content-center md:justify-content-end items-center">
           <Image
             src="src/image/imagenInicio.png"
             alt="Laboratorio con tecnología"
-            className="md:ml-auto block md:h-full"
+            className="block w-full md:w-auto h-auto max-h-80 md:max-h-full"
             width="1001"
             height="667"
           />
