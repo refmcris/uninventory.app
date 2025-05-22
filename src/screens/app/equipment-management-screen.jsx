@@ -24,6 +24,8 @@ export const EquipmentManagementScreen = () => {
   const [editEquipment, setEditEquipment] = useState(false);
   const [loaders, setLoaders] = useState({});
 
+  const sessionData = JSON.parse(localStorage.getItem("session"));
+
   //refs
   const toastRef = useRef();
 
@@ -100,7 +102,7 @@ export const EquipmentManagementScreen = () => {
         cols,
         data: data,
         sheetName: "Equipos",
-        creator: "awo",
+        creator: sessionData?.fullName,
         handleToastDone,
         handleLoading: handleLoaders
       });
@@ -179,35 +181,36 @@ export const EquipmentManagementScreen = () => {
   }, []);
   return (
     <DashboardLayout>
-      <div className=" w-full  p-4">
-        <div className="flex justify-content-between align-items-center mb-4">
-          <h1 className="text-3xl font-bold text-gray-900">
+      <div className="w-full p-2 md:p-4">
+        <div className="flex flex-column md:flex-row justify-content-between align-items-center mb-4 gap-2 md:gap-0">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
             Gestión de equipos
           </h1>
-          <div>
+          <div className="flex flex-column md:flex-row gap-2 md:gap-0">
             <Button
               label="Agregar equipo"
               icon="pi pi-plus"
               onClick={() => setAddEquipment(true)}
+              className="w-full md:w-auto"
             />
             <Button
               tooltip="Exportar a Excel"
               tooltipOptions={{ position: "top", showDelay: 500 }}
               icon="pi pi-file-excel"
               severity="success"
-              className="ml-2"
+              className="ml-0 md:ml-2"
               onClick={onExportExcel}
             />
           </div>
         </div>
-
-        <div>
+        <div className="overflow-x-auto">
           <DataTable
             value={equipments}
             size="normal"
             showGridlines
             scrollHeight="70vh"
             emptyMessage="No hay equipos registrados"
+            className="min-w-full"
           >
             <Column
               headerClassName="bg-gray-200 text-gray-900 font-bold w-12rem"

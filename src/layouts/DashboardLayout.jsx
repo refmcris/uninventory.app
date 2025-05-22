@@ -20,6 +20,11 @@ const sidebarMenuItems = [
     label: "Usuarios Activos/Inactivos",
     path: "/dashboard-usuarios",
     icon: "pi pi-users"
+  },
+  {
+    label: "Prestamos Activos/Inactivos",
+    path: "/loans-management",
+    icon: "pi pi-desktop"
   }
 ];
 
@@ -38,14 +43,14 @@ export const DashboardLayout = ({ children }) => {
 
   const floatingButton = {
     position: "fixed",
-    top: "100px",
+    top: "90px",
     left: "1rem",
-    zIndex: 40
+    zIndex: 1001
   };
 
   return (
     <UserLandingWrapper>
-      <div style={floatingButton}>
+      <div style={floatingButton} className="inline-flex">
         <Button
           icon="pi pi-chart-bar"
           aria-label="Abrir menú de estadísticas"
@@ -60,10 +65,11 @@ export const DashboardLayout = ({ children }) => {
         menuItems={sidebarMenuItems}
         onMenuItemClick={handleMenuClick}
         header={sidebarHeader}
+        className="z-1000"
       />
 
-      <div className="p-4" style={{ marginTop: "20px" }}>
-        <div className="max-w-6xl mx-auto">{children}</div>
+      <div className="p-2 md:p-4" style={{ marginTop: "20px" }}>
+        <div className="max-w-full md:max-w-6xl mx-auto">{children}</div>
       </div>
     </UserLandingWrapper>
   );

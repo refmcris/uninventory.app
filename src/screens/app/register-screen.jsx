@@ -124,8 +124,8 @@ export const RegisterScreen = () => {
   return (
     <LandingWrapperLogin className="bg-gray-100">
       <div className="w-full py-4">
-        <div className="grid grid-nogutter max-w-screen-lg mx-auto px-4 pt-6">
-          <Card className="w-11 md:w-30rem mx-auto my-4 ">
+        <div className="grid grid-nogutter max-w-full md:max-w-screen-lg mx-auto px-2 md:px-4 pt-6">
+          <Card className="w-full md:w-30rem mx-auto my-4 ">
             <h2 className="text-center mb-6 text-2xl">Registro de Usuario</h2>
 
             <form onSubmit={handleSubmit} className="flex flex-column gap-4">
@@ -226,17 +226,16 @@ export const RegisterScreen = () => {
                 <label htmlFor="password" className="block mb-2 font-medium">
                   Contraseña *
                 </label>
-                <Password
+                <InputText
                   id="password"
                   name="password"
+                  type="password"
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="Ingrese su contraseña"
-                  className={classNames({
+                  className={classNames("w-full", {
                     "p-invalid": isFormFieldValid("password")
                   })}
-                  toggleMask
-                  feedback={false}
                 />
                 {getFormErrorMessage("password")}
                 <small className="block mt-2 text-sm text-gray-600">
@@ -250,6 +249,7 @@ export const RegisterScreen = () => {
                 label="Registrarse"
                 className="w-full mt-4"
                 severity="danger"
+                disabled={true}
               />
 
               {/* Enlace de login con más margen superior */}

@@ -12,3 +12,4 @@ export * from "./active-inactive-equipments-screen";
 export * from "./active-inactive-loans-screen";
 export * from "./active-inactive-users-screen";
 export * from "./equipment-management-screen";
+export * from "./loans-management";

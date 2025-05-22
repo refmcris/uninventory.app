@@ -97,8 +97,8 @@ export const Equipment = () => {
 
   const itemTemplate = (equipment) => {
     return (
-      <div className="col-12 sm:col-6 lg:col-4 p-2">
-        <Card className="h-full flex flex-column">
+      <div className="col-12 sm:col-6 lg:col-4 p-2 flex">
+        <Card className="h-full flex flex-column w-full">
           <div className="flex flex-column flex-1">
             <div className="w-full h-20rem overflow-hidden">
               <img
@@ -159,7 +159,7 @@ export const Equipment = () => {
           <h2 className="text-3xl font-bold mb-3 md:mb-0">
             Catálogo de Equipos
           </h2>
-          <div className="flex flex-column sm:flex-row gap-3">
+          <div className="flex flex-row sm:flex-row gap-3">
             <Dropdown
               value={selectedCategory}
               options={categories?.map((category) => ({
