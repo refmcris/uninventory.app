@@ -34,7 +34,6 @@ export const LoansManagement = () => {
         toastRef
       });
     } catch (error) {
-      console.log(error);
       ctc({ msg: "Error al actualizar el prestamo", toastRef });
     } finally {
       handleGetLoans();
@@ -46,7 +45,6 @@ export const LoansManagement = () => {
       const response = await GetLoans();
       setLoans(response);
       setHasActiveLoan(response.some((loan) => !loan.status));
-      console.log(response);
     } catch (error) {
       ctc({
         msg: "Error al obtener los prestamos",

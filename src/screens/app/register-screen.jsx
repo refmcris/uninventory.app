@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { LandingWrapperLogin } from "../../wrappers";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
@@ -6,9 +6,16 @@ import { Card } from "primereact/card";
 import { Password } from "primereact/password";
 import { Message } from "primereact/message";
 import { classNames } from "primereact/utils";
+import { ctc, RegisterUser, useForm } from "../../helpers";
+import { useLocation } from "wouter";
+import { Toast } from "primereact/toast";
 
 export const RegisterScreen = () => {
-  const [formData, setFormData] = useState({
+  const [l, setLocation] = useLocation();
+  // refs
+  const toastRef = useRef(null);
+  // hooks
+  const { formState, onChange } = useForm({
     codigo: "",
     nombre: "",
     apellido: "",
@@ -26,38 +33,38 @@ export const RegisterScreen = () => {
 
     // Validación de código
     const codeRegex = /^[0-9]{9}$/;
-    if (!formData.codigo) {
+    if (!formState?.codigo) {
       newErrors.codigo = "El código es requerido";
       valid = false;
-    } else if (!codeRegex.test(formData.codigo)) {
+    } else if (!codeRegex.test(formState?.codigo)) {
       newErrors.codigo = "El código debe de tener 9 dígitos";
       valid = false;
     }
 
     // Validación de nombre
-    if (!formData.nombre.trim()) {
+    if (!formState?.nombre.trim()) {
       newErrors.nombre = "El nombre es requerido";
       valid = false;
-    } else if (formData.nombre.length < 2) {
+    } else if (formState?.nombre.length < 2) {
       newErrors.nombre = "El nombre debe tener al menos 2 caracteres";
       valid = false;
     }
 
     // Validación de apellido
-    if (!formData.apellido.trim()) {
+    if (!formState?.apellido.trim()) {
       newErrors.apellido = "El apellido es requerido";
       valid = false;
     }
 
     // Validación de correo
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.correo) {
+    if (!formState?.correo) {
       newErrors.correo = "El correo es requerido";
       valid = false;
-    } else if (!emailRegex.test(formData.correo)) {
+    } else if (!emailRegex.test(formState?.correo)) {
       newErrors.correo = "Correo electrónico inválido";
       valid = false;
-    } else if (!formData.correo.endsWith("@correounivalle.edu.co")) {
+    } else if (!formState?.correo.endsWith("@correounivalle.edu.co")) {
       newErrors.correo =
         "Debe usar un correo institucional (@correounivalle.edu.co)";
       valid = false;
@@ -65,10 +72,10 @@ export const RegisterScreen = () => {
 
     // Validación de teléfono
     const phoneRegex = /^[0-9]{10}$/;
-    if (!formData.telefono) {
+    if (!formState?.telefono) {
       newErrors.telefono = "El teléfono es requerido";
       valid = false;
-    } else if (!phoneRegex.test(formData.telefono)) {
+    } else if (!phoneRegex.test(formState?.telefono)) {
       newErrors.telefono = "Teléfono debe tener 10 dígitos";
       valid = false;
     }
@@ -76,10 +83,10 @@ export const RegisterScreen = () => {
     // Validación de contraseña
     const passwordRegex =
       /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!formData.password) {
+    if (!formState?.password) {
       newErrors.password = "La contraseña es requerida";
       valid = false;
-    } else if (!passwordRegex.test(formData.password)) {
+    } else if (!passwordRegex.test(formState?.password)) {
       newErrors.password =
         "La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un carácter especial";
       valid = false;
@@ -89,25 +96,30 @@ export const RegisterScreen = () => {
     return valid;
   };
 
-  const handleSubmit = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     setSubmitted(true);
 
     if (validateForm()) {
-      // Lógica para enviar los datos al backend
-      console.log("Formulario válido:", formData);
-    }
-  };
+      try {
+        const register = await RegisterUser({
+          StudentCode: formState?.codigo,
+          FullName: formState?.nombre,
+          LastName: formState?.apellido,
+          Phone: formState?.telefono,
+          Email: formState?.correo,
+          UserRoleId: 2,
+          UserPassword: formState?.password
+        });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value
-    }));
-
-    if (submitted) {
-      validateForm();
+        setLocation("/login");
+      } catch (error) {
+        ctc({
+          error: error,
+          msg: "Error al crear el usuario, intente de nuevo",
+          toastRef
+        });
+      }
     }
   };
 
@@ -128,7 +140,7 @@ export const RegisterScreen = () => {
           <Card className="w-full md:w-30rem mx-auto my-4 ">
             <h2 className="text-center mb-6 text-2xl">Registro de Usuario</h2>
 
-            <form onSubmit={handleSubmit} className="flex flex-column gap-4">
+            <form onSubmit={handleRegister} className="flex flex-column gap-4">
               <div className="field mb-3">
                 <label htmlFor="codigo" className="block mb-2 font-medium">
                   Código *
@@ -136,8 +148,8 @@ export const RegisterScreen = () => {
                 <InputText
                   id="codigo"
                   name="codigo"
-                  value={formData.codigo}
-                  onChange={handleChange}
+                  value={formState?.codigo}
+                  onChange={onChange}
                   placeholder="Ingrese su código de estudiante"
                   className={classNames("w-full", {
                     "p-invalid": isFormFieldValid("codigo")
@@ -156,8 +168,8 @@ export const RegisterScreen = () => {
                 <InputText
                   id="nombre"
                   name="nombre"
-                  value={formData.nombre}
-                  onChange={handleChange}
+                  value={formState?.nombre}
+                  onChange={onChange}
                   placeholder="Ingrese su nombre"
                   className={classNames("w-full", {
                     "p-invalid": isFormFieldValid("nombre")
@@ -174,8 +186,8 @@ export const RegisterScreen = () => {
                 <InputText
                   id="apellido"
                   name="apellido"
-                  value={formData.apellido}
-                  onChange={handleChange}
+                  value={formState?.apellido}
+                  onChange={onChange}
                   placeholder="Ingrese su apellido"
                   className={classNames("w-full", {
                     "p-invalid": isFormFieldValid("apellido")
@@ -191,8 +203,8 @@ export const RegisterScreen = () => {
                 <InputText
                   id="correo"
                   name="correo"
-                  value={formData.correo}
-                  onChange={handleChange}
+                  value={formState?.correo}
+                  onChange={onChange}
                   placeholder="usuario@correounivalle.edu.co"
                   className={classNames("w-full", {
                     "p-invalid": isFormFieldValid("correo")
@@ -210,8 +222,8 @@ export const RegisterScreen = () => {
                 <InputText
                   id="telefono"
                   name="telefono"
-                  value={formData.telefono}
-                  onChange={handleChange}
+                  value={formState?.telefono}
+                  onChange={onChange}
                   placeholder="Ingrese su teléfono"
                   className={classNames("w-full", {
                     "p-invalid": isFormFieldValid("telefono")
@@ -222,16 +234,15 @@ export const RegisterScreen = () => {
                 {getFormErrorMessage("telefono")}
               </div>
 
-              <div className="field mb-3 w-full">
+              <div className="field mb-3">
                 <label htmlFor="password" className="block mb-2 font-medium">
                   Contraseña *
                 </label>
                 <InputText
                   id="password"
                   name="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={handleChange}
+                  value={formState?.password}
+                  onChange={onChange}
                   placeholder="Ingrese su contraseña"
                   className={classNames("w-full", {
                     "p-invalid": isFormFieldValid("password")
@@ -249,7 +260,6 @@ export const RegisterScreen = () => {
                 label="Registrarse"
                 className="w-full mt-4"
                 severity="danger"
-                disabled={true}
               />
 
               {/* Enlace de login con más margen superior */}
@@ -268,6 +278,7 @@ export const RegisterScreen = () => {
           </Card>
         </div>
       </div>
+      <Toast ref={toastRef} />
     </LandingWrapperLogin>
   );
 };
