@@ -5,7 +5,12 @@ import { Dropdown } from "primereact/dropdown";
 import { Card } from "primereact/card";
 import { Tag } from "primereact/tag";
 import { Button } from "primereact/button";
-import { GetCategories, GetEquipment, PostLoan } from "../../helpers/api";
+import {
+  GetCategories,
+  GetEquipment,
+  GetEquipmentByCategory,
+  PostLoan
+} from "../../helpers/api";
 import { AddLoan } from "../../components";
 import { Toast } from "primereact/toast";
 
@@ -30,7 +35,12 @@ export const Equipment = () => {
   const handleGetEquipment = async () => {
     handleLoaders({ getEquipment: true });
     try {
-      const response = await GetEquipment();
+      let response;
+      if (selectedCategory) {
+        response = await GetEquipmentByCategory(selectedCategory);
+      } else {
+        response = await GetEquipment();
+      }
       setEquipments(response);
     } catch (error) {
       ctc({
@@ -160,9 +170,12 @@ export const Equipment = () => {
   };
 
   useEffect(() => {
-    handleGetEquipment();
     handleGetCategories();
   }, []);
+
+  useEffect(() => {
+    handleGetEquipment();
+  }, [selectedCategory]);
 
   return (
     <UserLandingWrapper>
@@ -176,18 +189,12 @@ export const Equipment = () => {
               value={selectedCategory}
               options={categories?.map((category) => ({
                 label: category.name,
-                value: category.id
+                value: category.categoryId
               }))}
               onChange={(e) => setSelectedCategory(e.value)}
               placeholder="Categoría"
               className="w-full sm:w-auto"
-            />
-            <Dropdown
-              value={sortField}
-              options={sortOptions}
-              onChange={(e) => setSortField(e.value)}
-              placeholder="Ordenar por"
-              className="w-full sm:w-auto"
+              showClear
             />
           </div>
         </div>
