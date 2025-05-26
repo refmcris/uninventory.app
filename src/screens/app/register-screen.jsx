@@ -102,7 +102,7 @@ export const RegisterScreen = () => {
 
     if (validateForm()) {
       try {
-        const register = await RegisterUser({
+        await RegisterUser({
           StudentCode: formState?.codigo,
           FullName: formState?.nombre,
           LastName: formState?.apellido,
@@ -111,12 +111,11 @@ export const RegisterScreen = () => {
           UserRoleId: 2,
           UserPassword: formState?.password
         });
-
         setLocation("/login");
       } catch (error) {
         ctc({
-          error: error,
-          msg: "Error al crear el usuario, intente de nuevo",
+          error,
+          msg: "El usuario ya existe, porfavor intentar de nuevo",
           toastRef
         });
       }
