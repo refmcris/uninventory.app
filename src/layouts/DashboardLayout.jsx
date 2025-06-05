@@ -76,7 +76,7 @@ export const DashboardLayout = ({ children }) => {
           aria-label="Abrir menú de estadísticas"
           className={buttonClassName}
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          tooltip="Menú de Estadísticas"
+          tooltip="Menú"
           tooltipOptions={{ 
             position: 'right',
             showDelay: 150,
@@ -101,12 +101,10 @@ export const DashboardLayout = ({ children }) => {
 
       <style jsx>{`
         .custom-tooltip {
-          background: #cd1f32 !important;
           color: white !important;
           padding: 0.5rem 1rem !important;
           border-radius: 4px !important;
           font-size: 0.875rem !important;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
         }
         
         .p-button.p-button-rounded {
