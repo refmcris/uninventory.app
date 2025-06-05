@@ -86,7 +86,10 @@ export const UserProfile = () => {
 
   return (
     <UserLandingWrapper>
-      <div className="flex justify-content-center align-items-center min-h-screen ">
+      <div
+        className="flex justify-content-center align-items-center p-4"
+        style={{ minHeight: "calc(100vh - 5rem)" }}
+      >
         <Card
           className="shadow-4"
           style={{ width: "80rem", textAlign: "center" }}
@@ -138,7 +141,7 @@ export const UserProfile = () => {
           <form className="w-full flex flex-column gap-2">
             <LabelInputRow label="Codigo de estudiante">
               <InputText
-                value={user?.studentCode}
+                value={session?.studentCode}
                 onChange={handleOnChange}
                 name="studentCode"
                 className="w-full"
@@ -146,7 +149,7 @@ export const UserProfile = () => {
             </LabelInputRow>
             <LabelInputRow label="Correo">
               <InputText
-                value={user?.email}
+                value={session?.email}
                 onChange={handleOnChange}
                 name="email"
                 className="w-full"
@@ -154,7 +157,7 @@ export const UserProfile = () => {
             </LabelInputRow>
             <LabelInputRow label="Telefono">
               <InputText
-                value={user?.phone}
+                value={session?.phone}
                 onChange={handleOnChange}
                 name="phone"
                 className="w-full"

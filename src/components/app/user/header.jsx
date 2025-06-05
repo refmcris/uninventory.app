@@ -116,7 +116,7 @@ export const HeaderUser = () => {
               className="text-black text-base md:text-xl border-circle w-2rem h-2rem md:w-3rem md:h-3rem   mr-2"
               style={{ backgroundColor: "#ccc8c8" }}
             />
-            <i className="pi pi-chevron-down text-white text-lg" />
+            <i className="pi pi-chevron-down text-white text-lg mt-3" />
           </div>
           <Menu model={menuItems} popup ref={menuRef} />
         </div>

@@ -11,7 +11,7 @@ export const HeaderLogin = () => {
       style={{ backgroundColor: "#cd1f32", zIndex: 1000 }}
     >
       <div
-        className="flex align-items-center gap-2 ml-2 md:ml-5 h-full cursor-pointer"
+        className="flex align-items-center gap-2  md:ml-5 h-full cursor-pointer"
         onClick={() => setLocation("/")}
       >
         <img

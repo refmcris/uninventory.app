@@ -39,7 +39,7 @@ export const LoginScreen = () => {
 
   return (
     <LandingWrapperLogin>
-      <Card className="w-11 mt-6 md:w-30rem mx-auto flex flex-column justify-content-center">
+      <Card className="w-11 mt-8 md:w-30rem mx-auto flex flex-column justify-content-center">
         <div className="flex justify-content-center mb-5">
           <div className="w-10rem">
             <img src={logo} alt="Uninventory" className="w-full" />
