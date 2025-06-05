@@ -4,7 +4,8 @@ import {
   GetUsers,
   GetActiveInactiveEquipments,
   GetActiveInactiveLoans,
-  GetActiveInactiveUsers
+  GetActiveInactiveUsers,
+  GetLoans
 } from "../../helpers/api";
 import { Card } from "primereact/card";
 import { DashboardLayout } from "../../layouts";
@@ -16,7 +17,6 @@ import { ProgressSpinner } from "primereact/progressspinner";
 import { Calendar } from "primereact/calendar";
 import { Tooltip } from "primereact/tooltip";
 import { Toast } from "primereact/toast";
-import { getLoanTrends } from "../../helpers/mockDashboardApi";
 
 // Datos por defecto para los gráficos
 const defaultChartData = {
@@ -94,6 +94,7 @@ const defaultChartOptionsPie = {
   }
 };
 
+// Esta data por defecto se mantiene como fallback
 const defaultTrendData = {
   labels: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul"],
   datasets: [
@@ -150,13 +151,15 @@ export const DashboardScreen = () => {
           usersData,
           activeInactiveEquipments,
           activeInactiveLoans,
-          activeInactiveUsers
+          activeInactiveUsers,
+          loansData
         ] = await Promise.all([
           GetEquipment(),
           GetUsers(),
           GetActiveInactiveEquipments(),
           GetActiveInactiveLoans(),
-          GetActiveInactiveUsers()
+          GetActiveInactiveUsers(),
+          GetLoans()
         ]);
 
         // Update stats
@@ -198,23 +201,48 @@ export const DashboardScreen = () => {
         // Tendencia de préstamos
         let trend;
         try {
-          trend = await getLoanTrends({ startDate, endDate });
-        } catch {
+          if (loansData && Array.isArray(loansData)) {
+            // Filter loans by date range (frontend processing - limited)
+            const filteredLoans = loansData.filter(loan => {
+              const loanDate = new Date(loan.loanDate); // Assuming loanDate is the relevant field
+              const start = startDate ? new Date(startDate) : null;
+              const end = endDate ? new Date(endDate) : null;
+              return (!start || loanDate >= start) && (!end || loanDate <= end);
+            });
+
+            // Aggregate loans by month for trend chart
+            const loanCountsByMonth = filteredLoans.reduce((acc, loan) => {
+              const loanDate = new Date(loan.loanDate);
+              const monthYear = `${loanDate.toLocaleString('default', { month: 'short' })} ${loanDate.getFullYear()}`;
+              acc[monthYear] = (acc[monthYear] || 0) + 1;
+              return acc;
+            }, {});
+
+            // Format for chart
+            const sortedMonths = Object.keys(loanCountsByMonth).sort((a, b) => new Date(a) - new Date(b));
+            trend = {
+              labels: sortedMonths,
+              datasets: [
+                {
+                  label: "Préstamos realizados",
+                  data: sortedMonths.map(month => loanCountsByMonth[month]),
+                  fill: false,
+                  borderColor: "#cd1f32",
+                  tension: 0.4
+                }
+              ]
+            };
+          } else {
+            trend = defaultTrendData; // Fallback to default if no data or error
+          }
+        } catch (error) {
+          console.error("Error processing loan trend data:", error);
           trend = [];
         }
-        if (!cancelled && trend && Array.isArray(trend) && trend.length > 0) {
-          setTrendData({
-            labels: trend.map((t) => t.month),
-            datasets: [
-              {
-                label: "Préstamos realizados",
-                data: trend.map((t) => t.value),
-                fill: false,
-                borderColor: "#cd1f32",
-                tension: 0.4
-              }
-            ]
-          });
+        
+        // Update trend data state
+        if (!cancelled && trend && trend.labels && trend.labels.length > 0) {
+          setTrendData(trend);
         } else if (!cancelled) {
           setTrendData(defaultTrendData);
         }
@@ -264,8 +292,8 @@ export const DashboardScreen = () => {
       {/* Filtros y notificaciones */}
       <div className="w-full py-8">
         <div style={{ width: '500px' }} className="mx-auto">
-          <div className="mb-4">
-            <h3 className="text-gray-700 text-lg">Filtrar por fecha:</h3>
+          <div className="mb-4 text-center">
+            <h3 className="text-gray-700 text-lg">Filtrar por fecha</h3>
           </div>
           <div className="flex items-center gap-4">
             <Calendar
@@ -314,8 +342,8 @@ export const DashboardScreen = () => {
       </div>
 
       {/* Tarjetas de Estadísticas */}
-      <div className="w-full mb-6 px-4 flex justify-center">
-        <div className="max-w-5xl w-full flex flex-wrap justify-center gap-6">
+      <div className="w-full mb-6 px-4">
+        <div className="max-w-5xl mx-auto flex flex-wrap justify-center gap-6">
           {[
             {
               title: "Equipos Disponibles",

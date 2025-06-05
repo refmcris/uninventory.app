@@ -65,6 +65,7 @@ export const GetLoansById = (id) =>
   cliente.get(`loan/user/${id}`).then((t) => t.data);
 export const PostLoan = (data) =>
   cliente.post("/loan", data).then((t) => t.data);
+export const GetLoans = () => cliente.get("/loan").then((t) => t.data);
 
 //users
 export const LoginUser = (body) =>
