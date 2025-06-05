@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "primereact/button";
 import { DashboardPrimeReactSidebar } from "../components/dashboard";
 import { useLocation } from "wouter";
 import { UserLandingWrapper } from "../wrappers";
-import { Tooltip } from "primereact/tooltip";
 
 const sidebarMenuItems = [
   {
@@ -46,7 +45,8 @@ export const DashboardLayout = ({ children }) => {
     transform: isButtonHovered ? "scale(1.1)" : "scale(1)",
     boxShadow: isButtonHovered 
       ? "0 4px 15px rgba(205, 31, 50, 0.4)" 
-      : "0 2px 8px rgba(0, 0, 0, 0.2)"
+      : "0 2px 8px rgba(0, 0, 0, 0.2)",
+    borderRadius: '50%',
   };
 
   const buttonClassName = `
@@ -55,9 +55,6 @@ export const DashboardLayout = ({ children }) => {
     bg-red-600 
     hover:bg-red-700 
     focus:outline-none 
-    focus:ring-2 
-    focus:ring-offset-2 
-    focus:ring-red-500 
     shadow-lg
     transition-all
     duration-300
@@ -130,13 +127,13 @@ export const DashboardLayout = ({ children }) => {
 
         @keyframes pulse {
           0% {
-            box-shadow: 0 0 0 0 rgba(205, 31, 50, 0.4);
+            box-shadow: 0 0 0 0 rgba(205, 31, 50, 0.4), 0 0 0 0 rgba(205, 31, 50, 0.4);
           }
           70% {
-            box-shadow: 0 0 0 10px rgba(205, 31, 50, 0);
+            box-shadow: 0 0 0 10px rgba(205, 31, 50, 0), 0 0 0 10px rgba(205, 31, 50, 0);
           }
           100% {
-            box-shadow: 0 0 0 0 rgba(205, 31, 50, 0);
+            box-shadow: 0 0 0 0 rgba(205, 31, 50, 0), 0 0 0 0 rgba(205, 31, 50, 0);
           }
         }
 
