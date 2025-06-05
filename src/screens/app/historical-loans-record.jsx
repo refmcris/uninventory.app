@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { UserLandingWrapper } from "../../wrappers";
 import { ColumnGroup } from "primereact/columngroup";
 import { Row } from "primereact/row";
@@ -6,22 +6,28 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { GetLoansById } from "../../helpers/api";
 import { Tooltip } from "primereact/tooltip";
+import { Toast } from "primereact/toast";
 
 export const HistoricalLoans = () => {
   const [loaders, setLoaders] = useState({});
   const [loans, setLoans] = useState([]);
 
-  const session = { id: 3 };
+  const sessionData = JSON.parse(localStorage.getItem("session"));
+
+  const toastRef = useRef();
 
   const handleLoaders = (value) => setLoaders((t) => ({ ...t, ...value }));
 
   const handleGetLoans = async () => {
     handleLoaders({ getLoans: true });
     try {
-      const response = await GetLoansById(session?.id);
+      const response = await GetLoansById(sessionData?.userId);
       setLoans(response);
     } catch (error) {
-      console.log("error", error);
+      ctc({
+        msg: "Error al obtener los préstamos",
+        toastRef
+      });
     } finally {
       handleLoaders({ getLoans: false });
     }
@@ -147,6 +153,7 @@ export const HistoricalLoans = () => {
           />
         </DataTable>
       </div>
+      <Toast ref={toastRef} />
     </UserLandingWrapper>
   );
 };

@@ -1,13 +1,12 @@
 import { PanelMenu } from "primereact/panelmenu";
 import { Button } from "primereact/button";
 import PropTypes from "prop-types";
-import noImageUser from "../../assets/images/noImageUser.png"; // Asegúrate de que la ruta sea correcta
-
+import noImageUser from "../../assets/images/noImageUser.png";
 
 export const Sidebar = ({ visible, onHide }) => {
   const userData = {
     name: "nombreUsuarioBD" || "Nombre de usuario",
-    email: "correoUsuarioBD" || "correo@ejemplo.com",
+    email: "correoUsuarioBD" || "correo@ejemplo.com"
   };
 
   const menuItems = [
@@ -25,7 +24,9 @@ export const Sidebar = ({ visible, onHide }) => {
 
   return (
     <div
-      className={`absolute top-0 left-0 h-full bg-white shadow-2 ${visible ? "block" : "hidden"}`}
+      className={`absolute top-0 left-0 h-full bg-white shadow-2 ${
+        visible ? "block" : "hidden"
+      }`}
       style={{ width: "250px", zIndex: 1000 }}
     >
       <div className="p-3 border-bottom font-bold">Perfil</div>
@@ -53,5 +54,5 @@ export const Sidebar = ({ visible, onHide }) => {
 
 Sidebar.propTypes = {
   visible: PropTypes.bool.isRequired,
-  onHide: PropTypes.func.isRequired,
+  onHide: PropTypes.func.isRequired
 };

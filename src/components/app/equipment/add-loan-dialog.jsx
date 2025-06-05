@@ -75,9 +75,10 @@ export const AddLoan = ({
       draggable={false}
       footer={bodyFooter}
       breakpoints={{ "960px": "75vw", "640px": "95vw" }}
-      style={{ width: "50vw" }}
+      style={{ width: "50vw", maxHeight: "90vh" }}
+      contentStyle={{ overflow: "auto" }}
     >
-      <form id="add-loan-form" className="w-full flex flex-column gap-3 p-1">
+      <form id="add-loan-form" className="w-full flex flex-column gap-3">
         <div className="flex flex-column gap-1">
           <label htmlFor="studentCode">Código Estudiante</label>
           <InputText

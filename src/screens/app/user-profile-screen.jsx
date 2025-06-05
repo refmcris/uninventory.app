@@ -95,8 +95,12 @@ export const UserProfile = () => {
             <Avatar
               label={session?.fullName?.slice(0, 2)?.toUpperCase()}
               shape="circle"
-              className="p-mb-3"
-              style={{ width: "6rem", height: "6rem" }}
+              className="p-mb-3 text-black text-xl"
+              style={{
+                width: "6rem",
+                height: "6rem",
+                backgroundColor: "#ccc8c8"
+              }}
             />
             <h2 className="p-mb-2">MARTINEZ TEZ CRISTIAN ALEJANDRO</h2>
             <Button
