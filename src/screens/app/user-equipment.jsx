@@ -9,10 +9,12 @@ import {
   GetCategories,
   GetEquipment,
   GetEquipmentByCategory,
-  PostLoan
+  PostLoan,
+  SearchEquipmentByName
 } from "../../helpers/api";
 import { AddLoan } from "../../components";
 import { Toast } from "primereact/toast";
+import { InputText } from "primereact/inputtext";
 
 export const Equipment = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -20,6 +22,7 @@ export const Equipment = () => {
   const [loaders, setLoaders] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedEquipment, setSelectedEquipment] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const [equipments, setEquipments] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -31,6 +34,26 @@ export const Equipment = () => {
   //handlers
 
   const handleLoaders = (value) => setLoaders((t) => ({ ...t, ...value }));
+
+  const handleSearch = async (query) => {
+    if (!query.trim()) {
+      handleGetEquipment();
+      return;
+    }
+
+    handleLoaders({ search: true });
+    try {
+      const response = await SearchEquipmentByName(query);
+      setEquipments(response);
+    } catch (error) {
+      ctc({
+        msg: "Error al buscar equipos",
+        toastRef
+      });
+    } finally {
+      handleLoaders({ search: false });
+    }
+  };
 
   const handleGetEquipment = async () => {
     handleLoaders({ getEquipment: true });
@@ -185,6 +208,18 @@ export const Equipment = () => {
             Catálogo de Equipos
           </h2>
           <div className="flex flex-row sm:flex-row gap-3">
+            <span className="p-input-icon-left w-full sm:w-auto">
+              <i className="pi pi-search" />
+              <InputText
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  handleSearch(e.target.value);
+                }}
+                placeholder="Buscar equipos..."
+                className="w-full"
+              />
+            </span>
             <Dropdown
               value={selectedCategory}
               options={categories?.map((category) => ({

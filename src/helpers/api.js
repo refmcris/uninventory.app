@@ -64,7 +64,12 @@ export const EditEquipment = (data) =>
 
 export const AddCategory = (data) =>
   cliente.post("/category", data).then((t) => t.data);
-
+export const SearchEquipmentByName = (name) =>
+  cliente
+    .get("/equipment/search/name", {
+      params: { name }
+    })
+    .then((t) => t.data);
 //loans
 
 export const GetLoans = (params) =>
@@ -90,7 +95,8 @@ export const GetUserById = (id) =>
 
 export const PutUser = (data) =>
   cliente.put(`/users/${data?.userId}`, data).then((t) => t.data);
-
+export const SearchUsersByName = (name) =>
+  cliente.get("/user/search/name", { params: { name } }).then((t) => t.data);
 //role
 
 export const GetRoles = () => cliente.get("/userRole").then((t) => t.data);
