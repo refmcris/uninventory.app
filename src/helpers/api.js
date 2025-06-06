@@ -45,6 +45,9 @@ cliente.defaults.headers["session-id"] = null;
 
 export const GetCategories = () => cliente.get("/category").then((t) => t.data);
 
+export const GetEquipmentByCategory = (id) =>
+  cliente.get(`/equipment/category/${id}`).then((t) => t.data);
+
 export const GetEquipment = (params) =>
   cliente.get("/equipment", { params }).then((t) => t.data);
 
@@ -59,6 +62,14 @@ export const AddEquipment = (data) =>
 export const EditEquipment = (data) =>
   cliente.put(`/equipment/${data?.equipmentId}`, data).then((t) => t.data);
 
+export const AddCategory = (data) =>
+  cliente.post("/category", data).then((t) => t.data);
+export const SearchEquipmentByName = (name) =>
+  cliente
+    .get("/equipment/search/name", {
+      params: { name }
+    })
+    .then((t) => t.data);
 //loans
 
 export const GetLoans = (params) =>
@@ -84,7 +95,8 @@ export const GetUserById = (id) =>
 
 export const PutUser = (data) =>
   cliente.put(`/users/${data?.userId}`, data).then((t) => t.data);
-
+export const SearchUsersByName = (name) =>
+  cliente.get("/user/search/name", { params: { name } }).then((t) => t.data);
 //role
 
 export const GetRoles = () => cliente.get("/userRole").then((t) => t.data);

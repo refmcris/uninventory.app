@@ -2,9 +2,9 @@ import { HeaderUser } from "../components";
 
 export const UserLandingWrapper = ({ children }) => {
   return (
-    <div style={{ position: "relative" }}>
+    <div className="flex flex-column min-h-screen">
       <HeaderUser />
-      <div>{children}</div>
+      <div className="flex-grow-1">{children}</div>
     </div>
   );
 };

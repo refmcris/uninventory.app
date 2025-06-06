@@ -5,11 +5,13 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { useEffect, useRef, useState } from "react";
 import {
+  AddCategory,
   AddEquipment,
   EditEquipment,
   exportExcel,
   GetEquipment,
-  handleToastDone
+  handleToastDone,
+  useForm
 } from "../../helpers";
 import { Button } from "primereact/button";
 import { AddEquipmentDialog } from "../../components/equipments/add-equipment-dialog";
@@ -17,20 +19,40 @@ import { Toast } from "primereact/toast";
 import { EditEquipmentDialog } from "../../components/equipments/edit-equipment-dialog";
 import { Tooltip } from "primereact/tooltip";
 import { DashboardLayout } from "../../layouts";
+import { Dialog } from "primereact/dialog";
+import { InputText } from "primereact/inputtext";
 
 export const EquipmentManagementScreen = () => {
   const [equipments, setEquipments] = useState([]);
   const [addEquipment, setAddEquipment] = useState(false);
   const [editEquipment, setEditEquipment] = useState(false);
   const [loaders, setLoaders] = useState({});
+  const [addCategory, setAddCategory] = useState(false);
 
   const sessionData = JSON.parse(localStorage.getItem("session"));
+
+  const { formState, onChange, handleValidateDisabledButtonSave } = useForm({
+    name: ""
+  });
 
   //refs
   const toastRef = useRef();
 
   const handleLoaders = (value) => setLoaders((t) => ({ ...t, ...value }));
 
+  const handleAddCategory = async (e) => {
+    try {
+      await AddCategory(formState);
+      setAddCategory(false);
+      handleToastDone({
+        msg: "Categoría agregada",
+        toastRef
+      });
+      HandleGetEquipments();
+    } catch (error) {
+      console.error("Error adding category:", error);
+    }
+  };
   const HandleGetEquipments = async () => {
     try {
       const response = await GetEquipment();
@@ -194,6 +216,13 @@ export const EquipmentManagementScreen = () => {
               className="w-full md:w-auto"
             />
             <Button
+              icon="pi pi-plus"
+              onClick={() => setAddCategory(true)}
+              className="w-full md:w-auto  ml-0 md:ml-2 p-2"
+              tooltip="Agregar Categoría"
+              tooltipOptions={{ position: "top", showDelay: 500 }}
+            />
+            <Button
               tooltip="Exportar a Excel"
               tooltipOptions={{ position: "top", showDelay: 500 }}
               icon="pi pi-file-excel"
@@ -301,6 +330,39 @@ export const EquipmentManagementScreen = () => {
           onEditEquipment={onEditEquipment}
           selectedEquipment={editEquipment}
         />
+        <Dialog
+          visible={addCategory}
+          onHide={() => setAddCategory(false)}
+          header="Agregar Categoría"
+          footer={
+            <div className="flex flex-row gap-2">
+              <Button
+                label="Cancelar"
+                onClick={() => setAddCategory(false)}
+                className="w-full"
+              />
+              <Button
+                label="Agregar"
+                onClick={handleAddCategory}
+                className="w-full"
+                disabled={handleValidateDisabledButtonSave()}
+              />
+            </div>
+          }
+        >
+          <form onSubmit={handleAddCategory}>
+            <div className="field">
+              <label htmlFor="name">Nombre</label>
+              <InputText
+                id="name"
+                name="name"
+                className="w-full"
+                value={formState?.name}
+                onChange={onChange}
+              />
+            </div>
+          </form>
+        </Dialog>
       </div>
       <Toast ref={toastRef} />
     </DashboardLayout>

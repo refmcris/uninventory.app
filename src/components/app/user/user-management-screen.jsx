@@ -7,18 +7,21 @@ import {
   GetUsers,
   exportExcel,
   handleToastDone,
-  PutUser
+  PutUser,
+  SearchUsersByName
 } from "../../../helpers";
 import { Toast } from "primereact/toast";
 import { Column } from "primereact/column";
 import { Tooltip } from "primereact/tooltip";
 import { EditUserDialog } from "./edit-user-dialog";
 import { DashboardLayout } from "../../../layouts";
+import { InputText } from "primereact/inputtext";
 
 export const UserManagement = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [loaders, setLoaders] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
 
   const sessionData = JSON.parse(localStorage.getItem("session"));
 
@@ -36,6 +39,26 @@ export const UserManagement = () => {
         msg: "Error al traer los usuarios",
         toastRef
       });
+    }
+  };
+
+  const handleSearch = async (query) => {
+    if (!query.trim()) {
+      handleGetUsers();
+      return;
+    }
+
+    handleLoaders({ search: true });
+    try {
+      const response = await SearchUsersByName(query);
+      setUsers(response);
+    } catch (error) {
+      ctc({
+        msg: "Error al buscar usuarios",
+        toastRef
+      });
+    } finally {
+      handleLoaders({ search: false });
     }
   };
 
@@ -157,13 +180,24 @@ export const UserManagement = () => {
           <h1 className="text-3xl font-bold text-gray-900">
             Gestión de usuarios
           </h1>
-          <div>
+          <div className="flex align-items-center gap-3">
+            <span className="p-input-icon-left">
+              <i className="pi pi-search" />
+              <InputText
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  handleSearch(e.target.value);
+                }}
+                placeholder="Buscar usuarios..."
+                className="w-full"
+              />
+            </span>
             <Button
               tooltip="Exportar a Excel"
               tooltipOptions={{ position: "top", showDelay: 500 }}
               icon="pi pi-file-excel"
               severity="success"
-              className="ml-2"
               onClick={onExportExcel}
             />
           </div>
