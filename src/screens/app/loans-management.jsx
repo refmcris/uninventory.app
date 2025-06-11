@@ -44,7 +44,7 @@ export const LoansManagement = () => {
     try {
       const response = await GetLoans();
       setLoans(response);
-      setHasActiveLoan(response.some((loan) => !loan.status));
+      setHasActiveLoan(response.some((loan) => loan.status));
     } catch (error) {
       ctc({
         msg: "Error al obtener los prestamos",
@@ -103,12 +103,12 @@ export const LoansManagement = () => {
     let tooltipText = "Desconocido";
 
     switch (status) {
-      case true:
+      case false:
         icon = "pi pi-check-circle";
         color = "text-green-500";
         tooltipText = "Devuelto";
         break;
-      case false:
+      case true:
         icon = "pi pi-exclamation-triangle";
         color = "text-orange-500";
         tooltipText = "En Préstamo";
@@ -130,7 +130,7 @@ export const LoansManagement = () => {
   };
 
   const editButtonTemplate = (rowData) => {
-    if (!rowData.status) {
+    if (rowData.status) {
       return (
         <Button
           icon="pi pi-check"
