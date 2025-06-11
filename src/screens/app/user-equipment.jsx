@@ -15,6 +15,7 @@ import {
 import { AddLoan } from "../../components";
 import { Toast } from "primereact/toast";
 import { InputText } from "primereact/inputtext";
+import { ctc, handleToastDone } from "../../helpers";
 
 export const Equipment = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -44,7 +45,11 @@ export const Equipment = () => {
     handleLoaders({ search: true });
     try {
       const response = await SearchEquipmentByName(query);
-      setEquipments(response);
+      // Filtrar solo los equipos disponibles
+      const availableEquipment = response.filter(
+        (equipment) => equipment.status === "available"
+      );
+      setEquipments(availableEquipment);
     } catch (error) {
       ctc({
         msg: "Error al buscar equipos",
@@ -64,7 +69,11 @@ export const Equipment = () => {
       } else {
         response = await GetEquipment();
       }
-      setEquipments(response);
+      // Filtrar solo los equipos disponibles
+      const availableEquipment = response.filter(
+        (equipment) => equipment.status === "available"
+      );
+      setEquipments(availableEquipment);
     } catch (error) {
       ctc({
         msg: "Error al obtener los equipos",
@@ -92,6 +101,12 @@ export const Equipment = () => {
     handleLoaders({ addLoan: true });
     try {
       const response = await PostLoan(body);
+      handleToastDone({
+        msg: "Préstamo solicitado correctamente",
+        toastRef
+      });
+      setIsDialogOpen(false);
+      handleGetEquipment();
     } catch (error) {
       ctc({
         msg: "Error al solicitar el préstamo",

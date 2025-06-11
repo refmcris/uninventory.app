@@ -37,8 +37,8 @@ export const AddLoan = ({
     e?.preventDefault();
     await handleAddLoan({
       body: {
-        EquipmentId: 13,
-        UserId: 3,
+        EquipmentId: selectedEquipment?.equipmentId,
+        UserId: sessionData?.userId,
         StartDate: dates[0],
         EndDate: dates[1]
       }

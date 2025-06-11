@@ -37,6 +37,13 @@ export const UserProfile = () => {
 
   // hooks
 
+  const handleGetUser = async () => {
+    handleLoaders({ getUser: true });
+    const response = await GetUserById(session?.userId);
+    setUser(response);
+    handleLoaders({ getUser: false });
+  };
+
   const handleSubmit = async () => {
     handleLoaders({ getUser: true });
     try {
@@ -83,7 +90,9 @@ export const UserProfile = () => {
       />
     </div>
   );
-
+  useEffect(() => {
+    handleGetUser();
+  }, []);
   return (
     <UserLandingWrapper>
       <div
@@ -105,7 +114,7 @@ export const UserProfile = () => {
                 backgroundColor: "#ccc8c8"
               }}
             />
-            <h2 className="p-mb-2">MARTINEZ TEZ CRISTIAN ALEJANDRO</h2>
+            <h2 className="p-mb-2">{`${user?.fullName} ${user?.lastName}`}</h2>
             <Button
               label="Editar perfil"
               icon="pi pi-user-edit"
@@ -115,16 +124,16 @@ export const UserProfile = () => {
             <div className="p-text-left" style={{ width: "100%" }}>
               <h3>Información Personal</h3>
               <p>
-                <strong>Código de estudiante:</strong> {session?.studentCode}
+                <strong>Código de estudiante:</strong> {user?.studentCode}
               </p>
 
               <p>
                 <strong>Nombre completo:</strong>{" "}
-                {`${session?.fullName} ${session?.lastName}`}
+                {`${user?.fullName} ${user?.lastName}`}
               </p>
 
               <p>
-                <strong>Correo electrónico:</strong> {session?.email}
+                <strong>Correo electrónico:</strong> {user?.email}
               </p>
             </div>
           </div>
@@ -141,7 +150,7 @@ export const UserProfile = () => {
           <form className="w-full flex flex-column gap-2">
             <LabelInputRow label="Codigo de estudiante">
               <InputText
-                value={session?.studentCode}
+                value={user?.studentCode}
                 onChange={handleOnChange}
                 name="studentCode"
                 className="w-full"
@@ -149,7 +158,7 @@ export const UserProfile = () => {
             </LabelInputRow>
             <LabelInputRow label="Correo">
               <InputText
-                value={session?.email}
+                value={user?.email}
                 onChange={handleOnChange}
                 name="email"
                 className="w-full"
@@ -157,7 +166,7 @@ export const UserProfile = () => {
             </LabelInputRow>
             <LabelInputRow label="Telefono">
               <InputText
-                value={session?.phone}
+                value={user?.phone}
                 onChange={handleOnChange}
                 name="phone"
                 className="w-full"
