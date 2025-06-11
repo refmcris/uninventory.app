@@ -19,6 +19,11 @@ const sidebarMenuItems = [
     label: "Usuarios Activos/Inactivos",
     path: "/dashboard-usuarios",
     icon: "pi pi-users"
+  },
+  {
+    label: "Gestión de Préstamos",
+    path: "/loans-management",
+    icon: "pi pi-book"
   }
 ];
 
@@ -43,10 +48,10 @@ export const DashboardLayout = ({ children }) => {
     zIndex: 40,
     transition: "all 0.3s ease-in-out",
     transform: isButtonHovered ? "scale(1.1)" : "scale(1)",
-    boxShadow: isButtonHovered 
-      ? "0 4px 15px rgba(205, 31, 50, 0.4)" 
+    boxShadow: isButtonHovered
+      ? "0 4px 15px rgba(205, 31, 50, 0.4)"
       : "0 2px 8px rgba(0, 0, 0, 0.2)",
-    borderRadius: '50%',
+    borderRadius: "50%"
   };
 
   const buttonClassName = `
@@ -60,12 +65,12 @@ export const DashboardLayout = ({ children }) => {
     duration-300
     ease-in-out
     border-none
-    ${isSidebarOpen ? 'rotate-180' : ''}
+    ${isSidebarOpen ? "rotate-180" : ""}
   `;
 
   return (
     <UserLandingWrapper>
-      <div 
+      <div
         style={floatingButtonStyle}
         onMouseEnter={() => setIsButtonHovered(true)}
         onMouseLeave={() => setIsButtonHovered(false)}
@@ -77,11 +82,11 @@ export const DashboardLayout = ({ children }) => {
           className={buttonClassName}
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
           tooltip="Menú"
-          tooltipOptions={{ 
-            position: 'right',
+          tooltipOptions={{
+            position: "right",
             showDelay: 150,
             hideDelay: 150,
-            className: 'custom-tooltip'
+            className: "custom-tooltip"
           }}
         />
       </div>
@@ -106,7 +111,7 @@ export const DashboardLayout = ({ children }) => {
           border-radius: 4px !important;
           font-size: 0.875rem !important;
         }
-        
+
         .p-button.p-button-rounded {
           width: 3rem !important;
           height: 3rem !important;
@@ -125,13 +130,16 @@ export const DashboardLayout = ({ children }) => {
 
         @keyframes pulse {
           0% {
-            box-shadow: 0 0 0 0 rgba(205, 31, 50, 0.4), 0 0 0 0 rgba(205, 31, 50, 0.4);
+            box-shadow: 0 0 0 0 rgba(205, 31, 50, 0.4),
+              0 0 0 0 rgba(205, 31, 50, 0.4);
           }
           70% {
-            box-shadow: 0 0 0 10px rgba(205, 31, 50, 0), 0 0 0 10px rgba(205, 31, 50, 0);
+            box-shadow: 0 0 0 10px rgba(205, 31, 50, 0),
+              0 0 0 10px rgba(205, 31, 50, 0);
           }
           100% {
-            box-shadow: 0 0 0 0 rgba(205, 31, 50, 0), 0 0 0 0 rgba(205, 31, 50, 0);
+            box-shadow: 0 0 0 0 rgba(205, 31, 50, 0),
+              0 0 0 0 rgba(205, 31, 50, 0);
           }
         }
 

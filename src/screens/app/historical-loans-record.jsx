@@ -73,12 +73,12 @@ export const HistoricalLoans = () => {
     let tooltipText = "Desconocido";
 
     switch (status) {
-      case true:
+      case false:
         icon = "pi pi-check-circle";
         color = "text-green-500";
         tooltipText = "Devuelto";
         break;
-      case false:
+      case true:
         icon = "pi pi-exclamation-triangle";
         color = "text-orange-500";
         tooltipText = "En Préstamo";
